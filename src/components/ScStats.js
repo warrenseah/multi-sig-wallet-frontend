@@ -1,9 +1,8 @@
-import { useContractReads } from "wagmi";
+import { useContractReads, useContractEvent, useBalance } from "wagmi";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import { useEffect, useMemo, useState } from "react";
-import { formatEther } from "viem";
 
 const smartContract = {
   address: process.env.REACT_APP_SC_ADDRESS,
@@ -13,15 +12,15 @@ const smartContract = {
 function ScStats() {
   const [quorem, setQuorem] = useState();
   const [owners, setOwners] = useState([]);
-  const [balanceOf, setBalanceOf] = useState(0);
+  // const [balanceOf, setBalanceOf] = useState(0);
+
+  const { data: balanceData, refetch: balanceRefetch } = useBalance({
+    address: process.env.REACT_APP_SC_ADDRESS,
+    watch: true,
+  });
 
   const { data } = useContractReads({
     contracts: [
-      {
-        ...smartContract,
-        functionName: "balanceOf",
-        watch: true,
-      },
       {
         ...smartContract,
         functionName: "getOwners",
@@ -39,13 +38,22 @@ function ScStats() {
 
   useEffect(() => {
     if (obj) {
-      setBalanceOf(obj[0].result);
-      setOwners(obj[1].result);
-      setQuorem(obj[2].result);
+      setOwners(obj[0].result);
+      setQuorem(obj[1].result);
 
       console.log("Use effect renders ...");
     }
   }, [obj]);
+
+  useContractEvent({
+    address: process.env.REACT_APP_SC_ADDRESS,
+    abi: smartContract.abi,
+    eventName: "Deposit",
+    listener(log) {
+      console.log("Deposit: ", log[0].args);
+      // balanceRefetch();
+    },
+  });
 
   return (
     <>
@@ -53,7 +61,9 @@ function ScStats() {
         <Col>
           <h1>Smart Contract Stats</h1>
           <p>Contract Address: {process.env.REACT_APP_SC_ADDRESS}</p>
-          <p>Balance: {balanceOf && `${formatEther(balanceOf)} Eth`}</p>
+          <p>
+            Balance: {balanceData?.formatted} {balanceData?.symbol}
+          </p>
           <p>Quorem: {quorem && quorem.toString()}</p>
           <div>Owners</div>
           <ul>
