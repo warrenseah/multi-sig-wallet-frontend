@@ -2,21 +2,14 @@ import { useContractReads, useContractEvent, useBalance } from "wagmi";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
-import { useEffect, useMemo, useState } from "react";
 
 const smartContract = {
   address: process.env.REACT_APP_SC_ADDRESS,
   abi: contractABI.abi,
 };
 
-function ScStats() {
-  const [quorem, setQuorem] = useState();
-  const [owners, setOwners] = useState([]);
-  // const [balanceOf, setBalanceOf] = useState(0);
-
   const { data: balanceData, refetch: balanceRefetch } = useBalance({
     address: process.env.REACT_APP_SC_ADDRESS,
-    watch: true,
   });
 
   const { data } = useContractReads({
@@ -31,19 +24,6 @@ function ScStats() {
       },
     ],
   });
-
-  const obj = useMemo(() => {
-    if (data) return data;
-  }, [data]);
-
-  useEffect(() => {
-    if (obj) {
-      setOwners(obj[0].result);
-      setQuorem(obj[1].result);
-
-      console.log("Use effect renders ...");
-    }
-  }, [obj]);
 
   useContractEvent({
     address: process.env.REACT_APP_SC_ADDRESS,
@@ -64,10 +44,11 @@ function ScStats() {
           <p>
             Balance: {balanceData?.formatted} {balanceData?.symbol}
           </p>
-          <p>Quorem: {quorem && quorem.toString()}</p>
+          <p>Quorem: {data[1]?.result && data[1].result.toString()}</p>
           <div>Owners</div>
           <ul>
-            {owners && owners.map((owner) => <li key={owner}>{owner}</li>)}
+            {data[0].result?.length > 0 &&
+              data[0].result.map((owner) => <li key={owner}>{owner}</li>)}
           </ul>
         </Col>
       </Row>
