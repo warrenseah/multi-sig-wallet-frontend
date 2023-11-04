@@ -7,9 +7,15 @@ import ScStats from "./components/ScStats";
 import { useAccount } from "wagmi";
 import UserFeatures from "./components/UserFeatures";
 
-function App() {
-  const { address, isConnected } = useAccount();
+import { toast } from "react-toastify";
 
+function App() {
+  const { address, isConnected } = useAccount({
+    onConnect({ address, connector, isReconnected }) {
+      toast(`Connected to ${address}`);
+      console.log("Connected", { address, connector, isReconnected });
+    },
+  });
   return (
     <div>
       <Container>
