@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -35,6 +37,7 @@ root.render(
   <React.StrictMode>
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains} initialChain={hardhat}>
+        <ToastContainer />
         <App />
       </RainbowKitProvider>
     </WagmiConfig>
