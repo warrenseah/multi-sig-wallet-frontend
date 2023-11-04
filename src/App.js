@@ -19,7 +19,7 @@ function App() {
             <ConnectButton />
           </Col>
         </Row>
-        <ScStats />
+        <ScStats address={address} />
         {isConnected && (
           <>
             <UserFeatures address={address} />

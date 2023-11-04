@@ -8,6 +8,7 @@ const smartContract = {
   abi: contractABI.abi,
 };
 
+function ScStats({ address }) {
   const { data: balanceData, refetch: balanceRefetch } = useBalance({
     address: process.env.REACT_APP_SC_ADDRESS,
   });
@@ -29,9 +30,16 @@ const smartContract = {
     address: process.env.REACT_APP_SC_ADDRESS,
     abi: smartContract.abi,
     eventName: "Deposit",
-    listener(log) {
-      console.log("Deposit: ", log[0].args);
-      // balanceRefetch();
+    listener(logs) {
+      // console.log("Deposit: ", logs);
+      balanceRefetch();
+
+      // Filter event by user address
+      if (logs[0]?.args && logs[0].args?.sender === address) {
+        const userEvent = logs[0].args;
+        console.log("User Event: ", userEvent);
+        // Display pop up notification
+      }
     },
   });
 
