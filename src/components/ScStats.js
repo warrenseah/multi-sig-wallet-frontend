@@ -2,6 +2,8 @@ import { useContractReads, useContractEvent, useBalance } from "wagmi";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
+import { toast } from "react-toastify";
+import { formatEther } from "viem";
 
 const smartContract = {
   address: process.env.REACT_APP_SC_ADDRESS,
@@ -38,7 +40,9 @@ function ScStats({ address }) {
       if (logs[0]?.args && logs[0].args?.sender === address) {
         const userEvent = logs[0].args;
         console.log("User Event: ", userEvent);
+        const depositedAmt = formatEther(userEvent.amount?.toString());
         // Display pop up notification
+        toast.success(`Deposited ${depositedAmt} Eth!`);
       }
     },
   });
