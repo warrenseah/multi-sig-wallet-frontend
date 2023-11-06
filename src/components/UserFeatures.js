@@ -37,9 +37,9 @@ function UserFeatures({ address, quorem, isOwner }) {
       const depositedAmt = formatEther(userEvent?.amount?.toString());
       // Display pop up notification
       toast.success(
-        `Withdrawal to ${userEvent?.to} (txnId: ${parseInt(
+        `Withdrawal txnId: ${parseInt(
           userEvent?.transactionindex
-        )}) with withdrawal amount: ${depositedAmt} Eth created!`
+        )} with withdrawal amount: ${depositedAmt} Eth created!`
       );
     },
   });
@@ -85,16 +85,20 @@ function UserFeatures({ address, quorem, isOwner }) {
   // Contract Write Functions
   const {
     config: createTxnConfig,
-    error: createError,
-    isError: createIsError,
+    error: prepareCreateError,
+    isError: prepareCreateIsError,
   } = usePrepareContractWrite({
     ...multiSigWalletContract,
     functionName: "createWithdrawTx",
     args: [toAddress, withdrawEthAmt],
   });
 
-  const { data: createData, write: createWrite } =
-    useContractWrite(createTxnConfig);
+  const {
+    data: createData,
+    write: createWrite,
+    isError: createIsError,
+    error: createError,
+  } = useContractWrite(createTxnConfig);
   // console.log("createData: ", createData);
 
   const { isLoading: createIsLoading, isSuccess: createIsSuccess } =
@@ -112,8 +116,8 @@ function UserFeatures({ address, quorem, isOwner }) {
 
   const {
     config: depositConfig,
-    error: prepareError,
-    isError: isPrepareError,
+    error: prepareDepositError,
+    isError: prepareDepositIsError,
   } = usePrepareContractWrite({
     ...multiSigWalletContract,
     functionName: "deposit",
@@ -122,8 +126,8 @@ function UserFeatures({ address, quorem, isOwner }) {
   const {
     data: writeData,
     write: depositWrite,
-    error,
-    isError,
+    error: depositError,
+    isError: depositIsError,
   } = useContractWrite(depositConfig);
   // console.log("WriteData: ", writeData);
 
@@ -190,6 +194,9 @@ function UserFeatures({ address, quorem, isOwner }) {
                   </div>
                 </div>
               )}
+              {(prepareCreateIsError || createIsError) && (
+                <div>Error: {(prepareCreateError || createError)?.message}</div>
+              )}
             </Form>
           </Accordion.Body>
         </Accordion.Item>
@@ -251,8 +258,8 @@ function UserFeatures({ address, quorem, isOwner }) {
             </div>
           </div>
         )}
-        {(isPrepareError || isError) && (
-          <div>Error: {(prepareError || error)?.message}</div>
+        {(prepareDepositIsError || depositIsError) && (
+          <div>Error: {(prepareDepositError || depositError)?.message}</div>
         )}
       </Form>
       <h2>Transaction Approval List</h2>
