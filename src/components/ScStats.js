@@ -42,7 +42,7 @@ function ScStats({ address }) {
       if (logs[0]?.args && logs[0].args?.sender === address) {
         const userEvent = logs[0].args;
         console.log("User Event: ", userEvent);
-        const depositedAmt = formatEther(userEvent.amount?.toString());
+        const depositedAmt = formatEther(userEvent?.amount?.toString());
         // Display pop up notification
         toast.success(`Deposited ${depositedAmt} Eth!`);
       }
@@ -58,11 +58,12 @@ function ScStats({ address }) {
           <p>
             Balance: {balanceData?.formatted} {balanceData?.symbol}
           </p>
-          <p>Quorem: {data[1]?.result && data[1].result.toString()}</p>
+          <p>Quorem: {data[1]?.result?.toString()}</p>
           <div>Owners</div>
           <ul>
-            {data[0].result?.length > 0 &&
-              data[0].result.map((owner) => <li key={owner}>{owner}</li>)}
+            {data[0]?.result?.map((owner) => (
+              <li key={owner}>{owner}</li>
+            ))}
           </ul>
         </Col>
       </Row>
