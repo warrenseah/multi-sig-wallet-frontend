@@ -11,7 +11,7 @@ const smartContract = {
 };
 
 function ScStats({ address, quorem }) {
-  const { data: balanceData, refetch: balanceRefetch } = useBalance({
+  const { data: balanceData } = useBalance({
     address: process.env.REACT_APP_SC_ADDRESS,
     watch: true,
   });
@@ -32,13 +32,12 @@ function ScStats({ address, quorem }) {
     abi: smartContract.abi,
     eventName: "Deposit",
     listener(logs) {
-      // console.log("Deposit: ", logs);
-      balanceRefetch();
+      // console.log("DepositEvents: ", logs);
 
       // Filter event by user address
       if (logs[0]?.args && logs[0].args?.sender === address) {
         const userEvent = logs[0].args;
-        console.log("User Event: ", userEvent);
+        console.log("user depositEvent: ", userEvent);
         const depositedAmt = formatEther(userEvent?.amount?.toString());
         // Display pop up notification
         toast.success(`Deposited ${depositedAmt} Eth!`);
