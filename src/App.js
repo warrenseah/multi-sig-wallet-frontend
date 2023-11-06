@@ -17,23 +17,34 @@ const smartContract = {
 };
 
 function App() {
-  const { data: readData } = useContractReads({
-    contracts: [
-      {
-        ...smartContract,
-        functionName: "quoremRequired",
-      },
-    ],
-  });
-
-  // console.log("appReadData: ", readData);
-
   const { address, isConnected } = useAccount({
     onConnect({ address, connector, isReconnected }) {
       toast(`Connected to ${address}`);
       console.log("Connected", { address, connector, isReconnected });
     },
   });
+  console.log("userAddress: ", address);
+
+  const { data: readData } = useContractReads({
+    contracts: [
+      {
+        ...smartContract,
+        functionName: "quoremRequired",
+      },
+      {
+        ...smartContract,
+        functionName: "getOwners",
+      },
+    ],
+  });
+
+  // console.log("appReadData: ", readData);
+  const quorem = parseInt(readData[0]?.result);
+  const owners = readData[1]?.result;
+  // console.log("Owners: ", owners);
+  const isOwner = owners?.includes(address);
+
+  console.log("isOwner: ", isOwner);
   return (
     <div>
       <Container>
@@ -43,13 +54,10 @@ function App() {
             <ConnectButton />
           </Col>
         </Row>
-        <ScStats address={address} quorem={parseInt(readData[0]?.result)} />
+        <ScStats address={address} quorem={quorem} owners={owners} />
         {isConnected && (
           <>
-            <UserFeatures
-              address={address}
-              quorem={parseInt(readData[0]?.result)}
-            />
+            <UserFeatures address={address} quorem={quorem} isOwner={isOwner} />
           </>
         )}
       </Container>

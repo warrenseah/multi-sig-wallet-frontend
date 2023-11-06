@@ -10,22 +10,11 @@ const smartContract = {
   abi: contractABI.abi,
 };
 
-function ScStats({ address, quorem }) {
+function ScStats({ address, quorem, owners }) {
   const { data: balanceData } = useBalance({
     address: process.env.REACT_APP_SC_ADDRESS,
     watch: true,
   });
-
-  const { data } = useContractReads({
-    contracts: [
-      {
-        ...smartContract,
-        functionName: "getOwners",
-      },
-    ],
-  });
-
-  console.log("userFeature readData: ", data);
 
   useContractEvent({
     address: process.env.REACT_APP_SC_ADDRESS,
@@ -57,7 +46,7 @@ function ScStats({ address, quorem }) {
           <p>Quorem: {quorem || ""}</p>
           <div>Owners</div>
           <ul>
-            {data[0]?.result?.map((owner) => (
+            {owners?.map((owner) => (
               <li key={owner}>{owner}</li>
             ))}
           </ul>
