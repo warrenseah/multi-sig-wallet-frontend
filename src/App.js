@@ -23,7 +23,7 @@ function App() {
       console.log("Connected", { address, connector, isReconnected });
     },
   });
-  console.log("userAddress: ", address);
+  // console.log("userAddress: ", address);
 
   const { data: readData } = useContractReads({
     contracts: [
@@ -44,7 +44,7 @@ function App() {
   // console.log("Owners: ", owners);
   const isOwner = owners?.includes(address);
 
-  console.log("isOwner: ", isOwner);
+  // console.log("isOwner: ", isOwner);
   return (
     <div>
       <Container>
