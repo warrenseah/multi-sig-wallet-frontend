@@ -2,12 +2,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { formatEther } from "viem";
+import { toast } from "react-toastify";
 
 import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
   useContractReads,
+  useContractEvent,
 } from "wagmi";
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
@@ -20,6 +22,42 @@ const multiSigWalletContract = {
 
 function UserFeatures({ address, quorem }) {
   const [depositAmt, setDepositAmt] = useState(0);
+
+  useContractEvent({
+    address: process.env.REACT_APP_SC_ADDRESS,
+    abi: MultiSigWallet.abi,
+    eventName: "CreateWithdrawTx",
+    listener(logs) {
+      console.log("createWithdrawTxn event: ", logs);
+
+      const userEvent = logs[0].args;
+      console.log("user createWithdrawTxnEvent: ", userEvent);
+      const depositedAmt = formatEther(userEvent?.amount?.toString());
+      // Display pop up notification
+      toast.success(
+        `Withdrawal to ${userEvent?.to} (txnId: ${parseInt(
+          userEvent?.transactionindex
+        )}) with withdrawal amount: ${depositedAmt} Eth created!`
+      );
+    },
+  });
+
+  useContractEvent({
+    address: process.env.REACT_APP_SC_ADDRESS,
+    abi: MultiSigWallet.abi,
+    eventName: "ApproveWithdrawTx",
+    listener(logs) {
+      // console.log("approveWithdrawTxn event: ", logs);
+      const userEvent = logs[0].args;
+      console.log("user approveWithdrawTxnEvent: ", userEvent);
+      // Display pop up notification
+      toast.success(
+        `txnId: ${parseInt(
+          userEvent?.transactionIndex
+        )} is approved and sent to recipent!`
+      );
+    },
+  });
 
   // Contract Read Functions
   const { data: readData, isLoading: readIsLoading } = useContractReads({
