@@ -28,6 +28,8 @@ function ScStats({ address }) {
     ],
   });
 
+  // console.log("contract multiple reads: ", data);
+
   useContractEvent({
     address: process.env.REACT_APP_SC_ADDRESS,
     abi: smartContract.abi,
