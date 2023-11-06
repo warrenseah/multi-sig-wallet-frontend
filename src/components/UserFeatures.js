@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 import { useState } from "react";
-import { formatEther, parseEther } from "viem";
+import { formatEther, parseEther, isAddress } from "viem";
 import { toast } from "react-toastify";
 
 import {
@@ -91,6 +91,7 @@ function UserFeatures({ address, quorem, isOwner }) {
     ...multiSigWalletContract,
     functionName: "createWithdrawTx",
     args: [toAddress, withdrawEthAmt],
+    enabled: isAddress(toAddress) && typeof withdrawEthAmt === "bigint",
   });
 
   const {
