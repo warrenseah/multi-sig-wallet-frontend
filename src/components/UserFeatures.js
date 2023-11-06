@@ -1,7 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Accordion from "react-bootstrap/Accordion";
 import { useState } from "react";
-import { formatEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import { toast } from "react-toastify";
 
 import {
@@ -13,15 +14,16 @@ import {
 } from "wagmi";
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
-import { parseEther } from "viem";
 
 const multiSigWalletContract = {
   address: process.env.REACT_APP_SC_ADDRESS,
   abi: MultiSigWallet.abi,
 };
 
-function UserFeatures({ address, quorem }) {
+function UserFeatures({ address, quorem, isOwner }) {
   const [depositAmt, setDepositAmt] = useState(0);
+  const [toAddress, setToAddress] = useState();
+  const [withdrawEthAmt, setWithdrawEthAmt] = useState();
 
   useContractEvent({
     address: process.env.REACT_APP_SC_ADDRESS,
@@ -82,6 +84,33 @@ function UserFeatures({ address, quorem }) {
 
   // Contract Write Functions
   const {
+    config: createTxnConfig,
+    error: createError,
+    isError: createIsError,
+  } = usePrepareContractWrite({
+    ...multiSigWalletContract,
+    functionName: "createWithdrawTx",
+    args: [toAddress, withdrawEthAmt],
+  });
+
+  const { data: createData, write: createWrite } =
+    useContractWrite(createTxnConfig);
+  // console.log("createData: ", createData);
+
+  const { isLoading: createIsLoading, isSuccess: createIsSuccess } =
+    useWaitForTransaction({ hash: createData?.hash });
+
+  const onChangeAddrCreateTxn = (event) => {
+    setToAddress(event.target.value);
+    // console.log("inputAddress: ", event.target.value);
+  };
+
+  const onChangeEthCreateTxn = (event) => {
+    setWithdrawEthAmt(parseEther(event.target.value));
+    // console.log("inputWithdrawEth: ", event.target.value);
+  };
+
+  const {
     config: depositConfig,
     error: prepareError,
     isError: isPrepareError,
@@ -96,7 +125,7 @@ function UserFeatures({ address, quorem }) {
     error,
     isError,
   } = useContractWrite(depositConfig);
-  console.log("WriteData: ", writeData);
+  // console.log("WriteData: ", writeData);
 
   const { isLoading: depositIsLoading, isSuccess: depositIsSuccess } =
     useWaitForTransaction({
@@ -109,6 +138,78 @@ function UserFeatures({ address, quorem }) {
     // console.log("Deposit amount: ", depositEther);
     setDepositAmt(depositEther);
   };
+
+  const onlyOwnerActions = isOwner ? (
+    <>
+      <h2>Only Owner Actions</h2>
+      <Accordion>
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>#1 Create Withdrawal</Accordion.Header>
+          <Accordion.Body>
+            <Form>
+              <Form.Group className="mb-3" controlId="formCreateTxn">
+                <Form.Label>To Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter address"
+                  onChange={onChangeAddrCreateTxn}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formEthAmount">
+                <Form.Label>Amount</Form.Label>
+                <Form.Control
+                  type="number"
+                  step="0.000001"
+                  placeholder="Enter Eth Amount"
+                  onChange={onChangeEthCreateTxn}
+                />
+              </Form.Group>
+              <Button
+                disabled={!createWrite || createIsLoading}
+                variant="primary"
+                onClick={() => {
+                  // console.log("toAddress: ", toAddress);
+                  // console.log("withdrawEther: ", withdrawEthAmt);
+                  createWrite?.();
+                }}
+              >
+                {createIsLoading ? "Creating..." : "Create"}
+              </Button>
+              {createIsSuccess && (
+                <div>
+                  Successfully created a withdrawal transaction!
+                  <div>
+                    <a
+                      href={`https://etherscan.io/tx/${createData?.hash}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Etherscan
+                    </a>
+                  </div>
+                </div>
+              )}
+            </Form>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>#2 Approve Withdrawal</Accordion.Header>
+          <Accordion.Body>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+    </>
+  ) : (
+    <h2>Not Owner</h2>
+  );
 
   return (
     <>
@@ -168,6 +269,7 @@ function UserFeatures({ address, quorem }) {
           ))}
         </ul>
       )}
+      {onlyOwnerActions}
     </>
   );
 }
