@@ -13,6 +13,7 @@ const smartContract = {
 function ScStats({ address }) {
   const { data: balanceData, refetch: balanceRefetch } = useBalance({
     address: process.env.REACT_APP_SC_ADDRESS,
+    watch: true,
   });
 
   const { data } = useContractReads({
