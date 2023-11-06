@@ -1,11 +1,13 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
+import { formatEther } from "viem";
 
 import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
+  useContractReads,
 } from "wagmi";
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
@@ -16,9 +18,31 @@ const multiSigWalletContract = {
   abi: MultiSigWallet.abi,
 };
 
-function UserFeatures({ address }) {
+function UserFeatures({ address, quorem }) {
   const [depositAmt, setDepositAmt] = useState(0);
 
+  // Contract Read Functions
+  const { data: readData, isLoading: readIsLoading } = useContractReads({
+    contracts: [{ ...multiSigWalletContract, functionName: "getWithdrawTxes" }],
+    watch: true,
+  });
+
+  // console.log("readData: ", readData);
+
+  // Add id to return readData transaction List
+  const txnsWithId = readData[0]?.result?.map((txn, index) => ({
+    ...txn,
+    id: index,
+  }));
+
+  // Filter for unapprove transactions only
+  const unapprovedTxns = txnsWithId?.filter(
+    (txn) => parseInt(txn?.approvals?.toString()) < quorem
+  );
+  // console.log("originalList: ", txnsWithId);
+  // console.log("FilteredList: ", unapprovedTxns);
+
+  // Contract Write Functions
   const {
     config: depositConfig,
     error: prepareError,
@@ -29,15 +53,16 @@ function UserFeatures({ address }) {
     value: depositAmt,
   });
   const {
-    data,
+    data: writeData,
     write: depositWrite,
     error,
     isError,
   } = useContractWrite(depositConfig);
+  console.log("WriteData: ", writeData);
 
   const { isLoading: depositIsLoading, isSuccess: depositIsSuccess } =
     useWaitForTransaction({
-      hash: data?.hash,
+      hash: writeData?.hash,
     });
 
   const onChangeDeposit = (event) => {
@@ -78,7 +103,7 @@ function UserFeatures({ address }) {
             Successfully deposited {depositAmt} ETH!
             <div>
               <a
-                href={`https://etherscan.io/tx/${data?.hash}`}
+                href={`https://etherscan.io/tx/${writeData?.hash}`}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -91,6 +116,20 @@ function UserFeatures({ address }) {
           <div>Error: {(prepareError || error)?.message}</div>
         )}
       </Form>
+      <h2>Transaction Approval List</h2>
+      {readIsLoading ? (
+        <p>Loading transaction list...</p>
+      ) : (
+        <ul>
+          {unapprovedTxns.map((txn) => (
+            <li key={txn.id}>{`id ${txn.id} || To=${
+              txn?.to
+            } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
+              txn?.approvals
+            } || Sent: ${txn?.sent}`}</li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }

@@ -4,12 +4,30 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ScStats from "./components/ScStats";
-import { useAccount } from "wagmi";
+import { useAccount, useContractReads } from "wagmi";
 import UserFeatures from "./components/UserFeatures";
 
 import { toast } from "react-toastify";
 
+import contractABI from "./artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
+
+const smartContract = {
+  address: process.env.REACT_APP_SC_ADDRESS,
+  abi: contractABI.abi,
+};
+
 function App() {
+  const { data: readData } = useContractReads({
+    contracts: [
+      {
+        ...smartContract,
+        functionName: "quoremRequired",
+      },
+    ],
+  });
+
+  // console.log("appReadData: ", readData);
+
   const { address, isConnected } = useAccount({
     onConnect({ address, connector, isReconnected }) {
       toast(`Connected to ${address}`);
@@ -25,10 +43,13 @@ function App() {
             <ConnectButton />
           </Col>
         </Row>
-        <ScStats address={address} />
+        <ScStats address={address} quorem={parseInt(readData[0]?.result)} />
         {isConnected && (
           <>
-            <UserFeatures address={address} />
+            <UserFeatures
+              address={address}
+              quorem={parseInt(readData[0]?.result)}
+            />
           </>
         )}
       </Container>
