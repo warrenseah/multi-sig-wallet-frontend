@@ -1,4 +1,4 @@
-import { useContractReads, useContractEvent, useBalance } from "wagmi";
+import { useContractEvent, useBalance } from "wagmi";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
