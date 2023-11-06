@@ -24,6 +24,7 @@ function UserFeatures({ address, quorem, isOwner }) {
   const [depositAmt, setDepositAmt] = useState(0);
   const [toAddress, setToAddress] = useState();
   const [withdrawEthAmt, setWithdrawEthAmt] = useState();
+  const [approveId, setApproveId] = useState();
 
   useContractEvent({
     address: process.env.REACT_APP_SC_ADDRESS,
@@ -83,6 +84,28 @@ function UserFeatures({ address, quorem, isOwner }) {
   // console.log("FilteredList: ", unapprovedTxns);
 
   // Contract Write Functions
+  const {
+    config: approveTxnConfig,
+    error: prepareApproveError,
+    isError: prepareApproveIsError,
+  } = usePrepareContractWrite({
+    ...multiSigWalletContract,
+    functionName: "approveWithdrawTx",
+    args: [approveId],
+    enabled: typeof approveId === "number",
+  });
+
+  const {
+    data: approveData,
+    write: approveWrite,
+    isError: approveIsError,
+    error: approveError,
+  } = useContractWrite(approveTxnConfig);
+  // console.log("approveData: ", approveData);
+
+  const { isLoading: approveIsLoading, isSuccess: approveIsSuccess } =
+    useWaitForTransaction({ hash: approveData?.hash });
+
   const {
     config: createTxnConfig,
     error: prepareCreateError,
@@ -147,7 +170,7 @@ function UserFeatures({ address, quorem, isOwner }) {
   const onlyOwnerActions = isOwner ? (
     <>
       <h2>Only Owner Actions</h2>
-      <Accordion>
+      <Accordion alwaysOpen>
         <Accordion.Item eventKey="0">
           <Accordion.Header>#1 Create Withdrawal</Accordion.Header>
           <Accordion.Body>
@@ -204,13 +227,46 @@ function UserFeatures({ address, quorem, isOwner }) {
         <Accordion.Item eventKey="1">
           <Accordion.Header>#2 Approve Withdrawal</Accordion.Header>
           <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            <Form>
+              <Form.Group className="mb-3" controlId="formApproveId">
+                <Form.Label>Txn Id</Form.Label>
+                <Form.Control
+                  type="number"
+                  step="1"
+                  placeholder="Enter Id"
+                  onChange={(e) => setApproveId(parseInt(e.target.value))}
+                />
+              </Form.Group>
+              <Button
+                disabled={!approveWrite || approveIsLoading}
+                variant="primary"
+                onClick={() => {
+                  // console.log("approveId: ", approveId);
+                  approveWrite?.();
+                }}
+              >
+                {approveIsLoading ? "Approving..." : "Approve"}
+              </Button>
+              {approveIsSuccess && (
+                <div>
+                  Successfully approve transactionId #{approveId}!
+                  <div>
+                    <a
+                      href={`https://etherscan.io/tx/${approveData?.hash}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Etherscan
+                    </a>
+                  </div>
+                </div>
+              )}
+              {(prepareApproveIsError || approveIsError) && (
+                <div>
+                  Error: {(prepareApproveError || approveError)?.message}
+                </div>
+              )}
+            </Form>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
