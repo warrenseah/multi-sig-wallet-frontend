@@ -5,9 +5,9 @@ import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWalle
 import { toast } from "react-toastify";
 import { formatEther } from "viem";
 
-function ScStats({ address, quorem, owners }) {
+function ScStats({ scAddress, address, quorem, owners }) {
   const smartContract = {
-    address: process.env.REACT_APP_SC_ADDRESS,
+    address: scAddress,
     abi: contractABI.abi,
   };
 
@@ -17,7 +17,7 @@ function ScStats({ address, quorem, owners }) {
   });
 
   useContractEvent({
-    address: process.env.REACT_APP_SC_ADDRESS,
+    address: scAddress,
     abi: smartContract.abi,
     eventName: "Deposit",
     listener(logs) {
@@ -39,7 +39,7 @@ function ScStats({ address, quorem, owners }) {
       <Row>
         <Col>
           <h1>Smart Contract Stats</h1>
-          <p>Contract Address: {process.env.REACT_APP_SC_ADDRESS}</p>
+          <p>Contract Address: {scAddress}</p>
           <p>
             Balance: {balanceData?.formatted} {balanceData?.symbol}
           </p>

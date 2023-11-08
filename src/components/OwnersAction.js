@@ -11,9 +11,9 @@ import {
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 
-function OwnersAction({ isOwner }) {
+function OwnersAction({ scAddress, isOwner }) {
   const multiSigWalletContract = {
-    address: process.env.REACT_APP_SC_ADDRESS,
+    address: scAddress,
     abi: MultiSigWallet.abi,
   };
 

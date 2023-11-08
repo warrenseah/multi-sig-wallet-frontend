@@ -15,16 +15,16 @@ import {
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import OwnersAction from "./OwnersAction";
 
-function UserFeatures({ address, quorem, isOwner }) {
+function UserFeatures({ scAddress, address, quorem, isOwner }) {
   const multiSigWalletContract = {
-    address: process.env.REACT_APP_SC_ADDRESS,
+    address: scAddress,
     abi: MultiSigWallet.abi,
   };
 
   const [depositAmt, setDepositAmt] = useState(0);
 
   useContractEvent({
-    address: process.env.REACT_APP_SC_ADDRESS,
+    address: scAddress,
     abi: MultiSigWallet.abi,
     eventName: "CreateWithdrawTx",
     listener(logs) {
@@ -43,7 +43,7 @@ function UserFeatures({ address, quorem, isOwner }) {
   });
 
   useContractEvent({
-    address: process.env.REACT_APP_SC_ADDRESS,
+    address: scAddress,
     abi: MultiSigWallet.abi,
     eventName: "ApproveWithdrawTx",
     listener(logs) {
@@ -169,7 +169,7 @@ function UserFeatures({ address, quorem, isOwner }) {
           ))}
         </ul>
       )}
-      <OwnersAction isOwner={isOwner} />
+      <OwnersAction scAddress={scAddress} isOwner={isOwner} />
     </>
   );
 }
