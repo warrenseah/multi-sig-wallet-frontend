@@ -11,11 +11,12 @@ import {
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 
-const multiSigWalletContract = {
-  address: process.env.REACT_APP_SC_ADDRESS,
-  abi: MultiSigWallet.abi,
-};
 function OwnersAction({ isOwner }) {
+  const multiSigWalletContract = {
+    address: process.env.REACT_APP_SC_ADDRESS,
+    abi: MultiSigWallet.abi,
+  };
+
   const [toAddress, setToAddress] = useState();
   const [withdrawEthAmt, setWithdrawEthAmt] = useState();
   const [approveId, setApproveId] = useState();

@@ -5,12 +5,12 @@ import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWalle
 import { toast } from "react-toastify";
 import { formatEther } from "viem";
 
-const smartContract = {
-  address: process.env.REACT_APP_SC_ADDRESS,
-  abi: contractABI.abi,
-};
-
 function ScStats({ address, quorem, owners }) {
+  const smartContract = {
+    address: process.env.REACT_APP_SC_ADDRESS,
+    abi: contractABI.abi,
+  };
+
   const { data: balanceData } = useBalance({
     address: process.env.REACT_APP_SC_ADDRESS,
     watch: true,

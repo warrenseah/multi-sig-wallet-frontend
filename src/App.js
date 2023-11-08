@@ -11,12 +11,12 @@ import { toast } from "react-toastify";
 
 import contractABI from "./artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 
-const smartContract = {
-  address: process.env.REACT_APP_SC_ADDRESS,
-  abi: contractABI.abi,
-};
-
 function App() {
+  const smartContract = {
+    address: process.env.REACT_APP_SC_ADDRESS,
+    abi: contractABI.abi,
+  };
+
   const { address, isConnected } = useAccount({
     onConnect({ address, connector, isReconnected }) {
       toast(`Connected to ${address}`);

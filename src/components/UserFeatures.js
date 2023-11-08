@@ -15,12 +15,12 @@ import {
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import OwnersAction from "./OwnersAction";
 
-const multiSigWalletContract = {
-  address: process.env.REACT_APP_SC_ADDRESS,
-  abi: MultiSigWallet.abi,
-};
-
 function UserFeatures({ address, quorem, isOwner }) {
+  const multiSigWalletContract = {
+    address: process.env.REACT_APP_SC_ADDRESS,
+    abi: MultiSigWallet.abi,
+  };
+
   const [depositAmt, setDepositAmt] = useState(0);
 
   useContractEvent({
