@@ -27,7 +27,7 @@ function App() {
             <ConnectButton />
           </Col>
         </Row>
-        <ScContract userAddress={address} />
+        {isConnected && <ScContract userAddress={address} />}
       </Container>
     </div>
   );
