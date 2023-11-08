@@ -1,17 +1,37 @@
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
-import { useContractReads } from "wagmi";
+import { useContractRead, useContractReads } from "wagmi";
 import { isAddress } from "viem";
 
 import ScStats from "./ScStats";
 import UserFeatures from "./UserFeatures";
 
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
+import factoryABI from "../artifacts/contracts/Factory.sol/Factory.json";
+
+const factoryContract = {
+  address: process.env.REACT_APP_FACTORY_ADDRESS,
+  abi: factoryABI.abi,
+};
 
 function ScContract({ userAddress }) {
   const [addressIsReady, setAddressIsReady] = useState(false);
-  const [scAddress, setScAddress] = useState("");
+  const [scAddress, setScAddress] = useState();
+
+  const {
+    data: factoryReadData,
+    isLoading: factoryIsLoading,
+    isSuccess: factoryReadIsSuccess,
+    refetch: walletRefetch,
+  } = useContractRead({
+    ...factoryContract,
+    functionName: "getWalletList",
+  });
+
+  // console.log("factoryReadData: ", factoryReadData);
 
   const smartContract = {
     address: scAddress,
@@ -41,33 +61,50 @@ function ScContract({ userAddress }) {
 
   return (
     <>
-      <Form>
-        <Form.Group className="mb-3" controlId="formSCAddress">
-          <Form.Label>Smart Contract Address</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter address"
+      <Row>
+        <Col>Factory Address: {process.env.REACT_APP_FACTORY_ADDRESS}</Col>
+      </Row>
+      {factoryReadIsSuccess && (
+        <>
+          <Form.Select
+            disabled={factoryIsLoading}
+            aria-label="Select smart contract address"
             onChange={(e) => {
+              console.log(e.target.value);
               if (isAddress(e.target.value)) {
                 setScAddress(e.target.value);
               }
             }}
-          />
-        </Form.Group>
-        <Button
-          variant="primary"
-          onClick={() => {
-            // console.log(addressIsReady);
-            if (isAddress(scAddress)) {
+          >
+            <option>Select Contract Address</option>
+            {factoryReadData?.map((address) => (
+              <option key={address} value={address}>
+                {address}
+              </option>
+            ))}
+          </Form.Select>
+          <Button
+            disabled={!isAddress(scAddress) || factoryIsLoading}
+            variant="primary"
+            onClick={() => {
+              // console.log(addressIsReady);
               setAddressIsReady(true);
-            } else {
+            }}
+          >
+            Display
+          </Button>{" "}
+          <Button
+            disabled={!addressIsReady || factoryIsLoading}
+            variant="danger"
+            onClick={() => {
+              // console.log(addressIsReady);
               setAddressIsReady(false);
-            }
-          }}
-        >
-          Display
-        </Button>
-      </Form>
+            }}
+          >
+            Close Contract
+          </Button>
+        </>
+      )}
 
       {addressIsReady && (
         <>
