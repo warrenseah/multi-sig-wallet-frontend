@@ -25,7 +25,7 @@ function App() {
   });
   // console.log("userAddress: ", address);
 
-  const { data: readData } = useContractReads({
+  const { data: readData, isLoading } = useContractReads({
     contracts: [
       {
         ...smartContract,
@@ -39,8 +39,8 @@ function App() {
   });
 
   // console.log("appReadData: ", readData);
-  const quorem = parseInt(readData[0]?.result);
-  const owners = readData[1]?.result;
+  const quorem = !isLoading ? parseInt(readData[0]?.result) : null;
+  const owners = !isLoading ? readData[1]?.result : [];
   // console.log("Owners: ", owners);
   const isOwner = owners?.includes(address);
 

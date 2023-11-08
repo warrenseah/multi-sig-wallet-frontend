@@ -68,10 +68,12 @@ function UserFeatures({ address, quorem, isOwner }) {
   // console.log("readData: ", readData);
 
   // Add id to return readData transaction List
-  const txnsWithId = readData[0]?.result?.map((txn, index) => ({
-    ...txn,
-    id: index,
-  }));
+  const txnsWithId = !readIsLoading
+    ? readData[0]?.result?.map((txn, index) => ({
+        ...txn,
+        id: index,
+      }))
+    : [];
 
   // Filter for unapprove transactions only
   const unapprovedTxns = txnsWithId?.filter(
