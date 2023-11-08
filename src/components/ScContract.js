@@ -65,7 +65,7 @@ function ScContract({ userAddress }) {
             }
           }}
         >
-          Submit
+          Display
         </Button>
       </Form>
 
