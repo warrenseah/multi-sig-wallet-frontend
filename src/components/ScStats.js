@@ -12,7 +12,7 @@ function ScStats({ scAddress, address, quorem, owners }) {
   };
 
   const { data: balanceData } = useBalance({
-    address: process.env.REACT_APP_SC_ADDRESS,
+    address: scAddress,
     watch: true,
   });
 
