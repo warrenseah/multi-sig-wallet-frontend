@@ -1,5 +1,3 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
@@ -11,6 +9,7 @@ import UserFeatures from "./UserFeatures";
 
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import factoryABI from "../artifacts/contracts/Factory.sol/Factory.json";
+import FactoryActions from "./FactoryActions";
 
 const factoryContract = {
   address: process.env.REACT_APP_FACTORY_ADDRESS,
@@ -61,9 +60,7 @@ function ScContract({ userAddress }) {
 
   return (
     <>
-      <Row>
-        <Col>Factory Address: {process.env.REACT_APP_FACTORY_ADDRESS}</Col>
-      </Row>
+      <div>Factory Address: {process.env.REACT_APP_FACTORY_ADDRESS}</div>
       {factoryReadIsSuccess && (
         <>
           <Form.Select
@@ -110,14 +107,14 @@ function ScContract({ userAddress }) {
         <>
           <ScStats
             scAddress={scAddress}
-            address={userAddress}
+            userAddress={userAddress}
             quorem={quorem}
             owners={owners}
           />
 
           <UserFeatures
             scAddress={scAddress}
-            address={userAddress}
+            userAddress={userAddress}
             quorem={quorem}
             isOwner={isOwner}
           />

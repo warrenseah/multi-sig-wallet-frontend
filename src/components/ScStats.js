@@ -5,7 +5,7 @@ import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWalle
 import { toast } from "react-toastify";
 import { formatEther } from "viem";
 
-function ScStats({ scAddress, address, quorem, owners }) {
+function ScStats({ scAddress, userAddress, quorem, owners }) {
   const smartContract = {
     address: scAddress,
     abi: contractABI.abi,
@@ -24,7 +24,7 @@ function ScStats({ scAddress, address, quorem, owners }) {
       // console.log("DepositEvents: ", logs);
 
       // Filter event by user address
-      if (logs[0]?.args && logs[0].args?.sender === address) {
+      if (logs[0]?.args && logs[0].args?.sender === userAddress) {
         const userEvent = logs[0].args;
         console.log("user depositEvent: ", userEvent);
         const depositedAmt = formatEther(userEvent?.amount?.toString());

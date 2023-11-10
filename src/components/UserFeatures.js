@@ -15,7 +15,7 @@ import {
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import OwnersActions from "./OwnersActions";
 
-function UserFeatures({ scAddress, address, quorem, isOwner }) {
+function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
   const multiSigWalletContract = {
     address: scAddress,
     abi: MultiSigWallet.abi,
@@ -118,7 +118,12 @@ function UserFeatures({ scAddress, address, quorem, isOwner }) {
       <Form>
         <Form.Group className="mb-3" controlId="formUserAddress">
           <Form.Label>User address</Form.Label>
-          <Form.Control type="text" placeholder={address} plaintext readOnly />
+          <Form.Control
+            type="text"
+            placeholder={userAddress}
+            plaintext
+            readOnly
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formDepositEther">
