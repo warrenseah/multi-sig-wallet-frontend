@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { formatEther, parseEther } from "viem";
 import { toast } from "react-toastify";
+import useDebounce from "../hooks/useDebounce";
 
 import {
   usePrepareContractWrite,
@@ -22,16 +23,17 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
   };
 
   const [depositAmt, setDepositAmt] = useState(0);
+  const debouncedDeposit = useDebounce(depositAmt, 1500);
 
   useContractEvent({
     address: scAddress,
     abi: MultiSigWallet.abi,
     eventName: "CreateWithdrawTx",
     listener(logs) {
-      console.log("createWithdrawTxn event: ", logs);
+      // console.log("createWithdrawTxn event: ", logs);
 
       const userEvent = logs[0].args;
-      console.log("user createWithdrawTxnEvent: ", userEvent);
+      // console.log("user createWithdrawTxnEvent: ", userEvent);
       const depositedAmt = formatEther(userEvent?.amount?.toString());
       // Display pop up notification
       toast.success(
@@ -89,7 +91,8 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
   } = usePrepareContractWrite({
     ...multiSigWalletContract,
     functionName: "deposit",
-    value: depositAmt,
+    value: debouncedDeposit,
+    enabled: Boolean(debouncedDeposit),
   });
   const {
     data: writeData,
@@ -110,6 +113,10 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
     // console.log("Deposit amount: ", depositEther);
     setDepositAmt(depositEther);
   };
+
+  // useEffect(() => {
+  //   console.log("debouncedDeposit: ", debouncedDeposit);
+  // }, [debouncedDeposit]);
 
   return (
     <>

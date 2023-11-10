@@ -8,6 +8,7 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import useDebounce from "../hooks/useDebounce";
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 
@@ -20,6 +21,8 @@ function OwnersActions({ scAddress, isOwner }) {
   const [toAddress, setToAddress] = useState("");
   const [withdrawEthAmt, setWithdrawEthAmt] = useState();
   const [approveId, setApproveId] = useState("");
+  const debouncedApproveId = useDebounce(approveId, 1500);
+  const debouncedWithdrawEth = useDebounce(withdrawEthAmt, 1500);
 
   // Contract Write Functions
   const {
@@ -29,8 +32,8 @@ function OwnersActions({ scAddress, isOwner }) {
   } = usePrepareContractWrite({
     ...multiSigWalletContract,
     functionName: "approveWithdrawTx",
-    args: [approveId],
-    enabled: typeof approveId === "number",
+    args: [debouncedApproveId],
+    enabled: typeof debouncedApproveId === "number",
   });
 
   const {
@@ -51,8 +54,8 @@ function OwnersActions({ scAddress, isOwner }) {
   } = usePrepareContractWrite({
     ...multiSigWalletContract,
     functionName: "createWithdrawTx",
-    args: [toAddress, withdrawEthAmt],
-    enabled: isAddress(toAddress) && typeof withdrawEthAmt === "bigint",
+    args: [toAddress, debouncedWithdrawEth],
+    enabled: Boolean(debouncedWithdrawEth),
   });
 
   const {
@@ -75,6 +78,10 @@ function OwnersActions({ scAddress, isOwner }) {
     setWithdrawEthAmt(parseEther(event.target.value));
     // console.log("inputWithdrawEth: ", event.target.value);
   };
+
+  // useEffect(() => {
+  //   console.log("debouncedWithdrawEth: ", typeof debouncedWithdrawEth);
+  // }, [debouncedWithdrawEth]);
 
   if (!isOwner) {
     return <h2>Not Owner</h2>;
