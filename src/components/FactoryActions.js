@@ -52,10 +52,10 @@ function FactoryActions({ userAddress, walletRefetch }) {
     setFormRows(temp);
   };
 
-  useEffect(() => {
-    console.log("formRows: ", formRows);
-    console.log("debounceValue: ", debouncedQuorem);
-  }, [formRows, debouncedQuorem]);
+  // useEffect(() => {
+  //   console.log("formRows: ", formRows);
+  //   console.log("debounceValue: ", debouncedQuorem);
+  // }, [formRows, debouncedQuorem]);
 
   const prepareAddresses = () => {
     return formRows.map((row) => {
@@ -69,7 +69,7 @@ function FactoryActions({ userAddress, walletRefetch }) {
   const { config: createConfig } = usePrepareContractWrite({
     ...factoryContract,
     functionName: "createNewWallet",
-    args: [prepareAddresses(), parseInt(debouncedQuorem)],
+    args: [prepareAddresses(), debouncedQuorem],
     enabled: Boolean(debouncedQuorem),
   });
 
@@ -126,8 +126,8 @@ function FactoryActions({ userAddress, walletRefetch }) {
           disabled={!createWrite || isLoading}
           variant="primary"
           onClick={() => {
-            console.log("formRows: ", formRows);
-            console.log("debouncedQuorem: ", debouncedQuorem);
+            // console.log("formRows: ", formRows);
+            // console.log("debouncedQuorem: ", debouncedQuorem);
             createWrite?.();
           }}
         >

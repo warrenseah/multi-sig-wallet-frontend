@@ -13,7 +13,7 @@ function App() {
   const { address, isConnected } = useAccount({
     onConnect({ address, connector, isReconnected }) {
       toast(`Connected to ${address}`);
-      console.log("Connected", { address, connector, isReconnected });
+      // console.log("Connected", { address, connector, isReconnected });
     },
   });
   // console.log("userAddress: ", address);
