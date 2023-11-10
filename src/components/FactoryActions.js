@@ -1,9 +1,16 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
-import { useContractEvent } from "wagmi";
+import {
+  useContractEvent,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+import { isAddress } from "viem";
 import { toast } from "react-toastify";
 import factoryABI from "../artifacts/contracts/Factory.sol/Factory.json";
+import useDebounce from "../hooks/useDebounce";
 
 const factoryContract = {
   address: process.env.REACT_APP_FACTORY_ADDRESS,
@@ -29,7 +36,9 @@ function FactoryActions({ userAddress, walletRefetch }) {
   });
 
   const [formRows, setFormRows] = useState([{ id: 1 }]);
-  const [quoremRequired, setQuoremRequired] = useState();
+  const [quoremRequired, setQuoremRequired] = useState("");
+
+  const debouncedQuorem = useDebounce(quoremRequired, 500);
 
   const addAddressHandler = (index, address) => {
     const temp = [...formRows];
@@ -45,7 +54,31 @@ function FactoryActions({ userAddress, walletRefetch }) {
 
   useEffect(() => {
     console.log("formRows: ", formRows);
-  }, [formRows]);
+    console.log("debounceValue: ", debouncedQuorem);
+  }, [formRows, debouncedQuorem]);
+
+  const prepareAddresses = () => {
+    return formRows.map((row) => {
+      if (isAddress(row.address)) {
+        return row.address;
+      }
+    });
+  };
+
+  // Factory contract write functions
+  const { config: createConfig } = usePrepareContractWrite({
+    ...factoryContract,
+    functionName: "createNewWallet",
+    args: [prepareAddresses(), parseInt(debouncedQuorem)],
+    enabled: Boolean(debouncedQuorem),
+  });
+
+  const { data: createData, write: createWrite } =
+    useContractWrite(createConfig);
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: createData?.hash,
+  });
+
   return (
     <>
       <h2>Create New Wallet</h2>
@@ -86,17 +119,30 @@ function FactoryActions({ userAddress, walletRefetch }) {
             step="1"
             placeholder="Enter a number"
             onChange={(e) => setQuoremRequired(e.target.value)}
+            value={quoremRequired}
           />
         </Form.Group>
         <Button
+          disabled={!createWrite || isLoading}
           variant="primary"
           onClick={() => {
             console.log("formRows: ", formRows);
-            console.log("quoremRequired: ", quoremRequired);
+            console.log("debouncedQuorem: ", debouncedQuorem);
+            createWrite?.();
           }}
         >
-          Create
+          {isLoading ? "Creating..." : "Create"}
         </Button>
+        {isSuccess && (
+          <div>
+            Created a new wallet successfully!
+            <div>
+              <a href={`https://etherscan.io/tx/${createData?.hash}`}>
+                Etherscan
+              </a>
+            </div>
+          </div>
+        )}
       </Form>
     </>
   );
