@@ -38,7 +38,7 @@ function FactoryActions({ userAddress, walletRefetch }) {
   const [formRows, setFormRows] = useState([{ id: 1 }]);
   const [quoremRequired, setQuoremRequired] = useState("");
 
-  const debouncedQuorem = useDebounce(quoremRequired, 500);
+  const debouncedQuorem = useDebounce(quoremRequired, 1500);
 
   const addAddressHandler = (index, address) => {
     const temp = [...formRows];
