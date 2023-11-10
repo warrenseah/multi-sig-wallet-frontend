@@ -100,6 +100,10 @@ function ScContract({ userAddress }) {
           >
             Close Contract
           </Button>
+          <FactoryActions
+            userAddress={userAddress}
+            walletRefetch={walletRefetch}
+          />
         </>
       )}
 
