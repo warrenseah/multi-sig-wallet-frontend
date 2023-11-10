@@ -58,11 +58,11 @@ function FactoryActions({ userAddress, walletRefetch }) {
   // }, [formRows, debouncedQuorem]);
 
   const prepareAddresses = () => {
-    return formRows.map((row) => {
-      if (isAddress(row.address)) {
-        return row.address;
-      }
+    const validAddresses = formRows.filter((row) => isAddress(row.address));
+    const result = validAddresses?.map((row) => {
+      return row.address;
     });
+    return result;
   };
 
   // Factory contract write functions
@@ -128,6 +128,7 @@ function FactoryActions({ userAddress, walletRefetch }) {
           onClick={() => {
             // console.log("formRows: ", formRows);
             // console.log("debouncedQuorem: ", debouncedQuorem);
+            // console.log("preparing: ", prepareAddresses());
             createWrite?.();
           }}
         >
