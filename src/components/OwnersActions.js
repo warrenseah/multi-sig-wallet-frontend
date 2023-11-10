@@ -17,9 +17,9 @@ function OwnersActions({ scAddress, isOwner }) {
     abi: MultiSigWallet.abi,
   };
 
-  const [toAddress, setToAddress] = useState();
+  const [toAddress, setToAddress] = useState("");
   const [withdrawEthAmt, setWithdrawEthAmt] = useState();
-  const [approveId, setApproveId] = useState();
+  const [approveId, setApproveId] = useState("");
 
   // Contract Write Functions
   const {
@@ -94,6 +94,7 @@ function OwnersActions({ scAddress, isOwner }) {
                   type="text"
                   placeholder="Enter address"
                   onChange={onChangeAddrCreateTxn}
+                  value={toAddress}
                 />
               </Form.Group>
 
@@ -148,6 +149,7 @@ function OwnersActions({ scAddress, isOwner }) {
                   step="1"
                   placeholder="Enter Id"
                   onChange={(e) => setApproveId(parseInt(e.target.value))}
+                  value={approveId}
                 />
               </Form.Group>
               <Button
