@@ -13,7 +13,7 @@ import {
 } from "wagmi";
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
-import OwnersAction from "./OwnersAction";
+import OwnersActions from "./OwnersActions";
 
 function UserFeatures({ scAddress, address, quorem, isOwner }) {
   const multiSigWalletContract = {
@@ -169,7 +169,7 @@ function UserFeatures({ scAddress, address, quorem, isOwner }) {
           ))}
         </ul>
       )}
-      <OwnersAction scAddress={scAddress} isOwner={isOwner} />
+      <OwnersActions scAddress={scAddress} isOwner={isOwner} />
     </>
   );
 }

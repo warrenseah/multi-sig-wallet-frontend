@@ -11,7 +11,7 @@ import {
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 
-function OwnersAction({ scAddress, isOwner }) {
+function OwnersActions({ scAddress, isOwner }) {
   const multiSigWalletContract = {
     address: scAddress,
     abi: MultiSigWallet.abi,
@@ -187,4 +187,4 @@ function OwnersAction({ scAddress, isOwner }) {
   );
 }
 
-export default OwnersAction;
+export default OwnersActions;
