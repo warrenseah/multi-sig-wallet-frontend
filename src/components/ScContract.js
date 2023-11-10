@@ -67,7 +67,7 @@ function ScContract({ userAddress }) {
             disabled={factoryIsLoading}
             aria-label="Select smart contract address"
             onChange={(e) => {
-              console.log(e.target.value);
+              // console.log(e.target.value);
               if (isAddress(e.target.value)) {
                 setScAddress(e.target.value);
               }

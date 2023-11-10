@@ -26,7 +26,7 @@ function ScStats({ scAddress, userAddress, quorem, owners }) {
       // Filter event by user address
       if (logs[0]?.args && logs[0].args?.sender === userAddress) {
         const userEvent = logs[0].args;
-        console.log("user depositEvent: ", userEvent);
+        // console.log("user depositEvent: ", userEvent);
         const depositedAmt = formatEther(userEvent?.amount?.toString());
         // Display pop up notification
         toast.success(`Deposited ${depositedAmt} Eth!`);
