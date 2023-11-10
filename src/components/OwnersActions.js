@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 import { useState } from "react";
-import { parseEther, isAddress } from "viem";
+import { parseEther } from "viem";
 import {
   usePrepareContractWrite,
   useContractWrite,
