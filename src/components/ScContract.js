@@ -74,9 +74,9 @@ function ScContract({ userAddress }) {
             }}
           >
             <option>Select Contract Address</option>
-            {factoryReadData?.map((address) => (
+            {factoryReadData?.map((address, index) => (
               <option key={address} value={address}>
-                {address}
+                {`walletID #${index + 1} ${address}`}
               </option>
             ))}
           </Form.Select>
