@@ -1,0 +1,362 @@
+body{
+  background-color: rgb(246, 243, 243) !important;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.tooltip{
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.price-div{
+  font-weight: bold;
+  color: #008FFB;
+}
+.year-div{
+  border-bottom: 1px solid;
+  font-weight: bold;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo{
+  font-size:40px;color:#18181b;font-family: 'Saira Semi Condensed', sans-serif;margin-top:20px;margin-left: 35px;
+}
+
+.connection-button{
+  margin-top: 20px;
+  margin-right: 33px;
+}
+
+ .factory-button .displayButton {
+  color: #fff;
+  background: linear-gradient(to left top,#ff2c9c,#ff287b,#ff395a,#ff5137,#ff6a00);
+  border: 1px solid #ff2c9c ;
+  border-radius: 14px;
+  width: 90px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 40px;
+  box-shadow: none; 
+  transition: all .5s ease;
+  z-index: 0;
+
+} 
+
+.factory-button .displayButton:hover,.displayButton:focus{
+box-shadow: 
+inset -2.9em 0 0 0 white,
+inset 2.9em 0 0 0 white; 
+transition: all .5s ease;
+border-color:1px solid #ff2c9c;
+color: #ff287b;
+cursor: pointer !important;
+}
+
+.factory-button .close-btn{
+  color: #fff;
+  background: linear-gradient(to left top,#ff2c9c,#ff287b,#ff395a,#ff5137,#ff6a00);
+  border: 1px solid #e9edcd ;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  width: 108px;
+  border-radius: 14px;
+  height: 40px;
+  padding: 8px;
+  transition: all .5s ease;
+  box-shadow: none;
+}
+
+.factory-button .close-btn:hover,.close-btn:focus{
+  box-shadow: 
+inset -4.2em 0 0 0 white,
+inset 4.2em 0 0 0 white; 
+transition: all .5s ease;
+border-color:1px solid #e9edcd;
+color: #ff287b;
+cursor: pointer !important;
+}
+
+.factory-section{
+  background-color: #fff;
+  border: 1px solid #DAD7CD;
+  margin: 2%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.factory-section .factory-address span{
+  font-family: 'Saira Semi Condensed', sans-serif;
+  font-size: 26px;
+  color: #18181b;
+
+}
+.factory-address span .factory-address-value{
+  font-family: 'Saira Semi Condensed', sans-serif;
+  font-size: 25px;
+  color: #18181b;
+}
+.input-field{
+  width: 70%;
+}
+
+.input-field .factory-address-form{
+  font-weight: 700 !important;
+}
+.mb-2 {
+    margin-bottom: 0.5rem!important;
+}
+.mt-3 {
+    margin-top: 1rem!important;
+}
+
+/* 
+*:focus {
+  outline: none;
+} */
+
+textarea:focus, select:focus{
+  outline: none;
+  border: none;
+}
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.factory-button{
+  display: flex;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.statics-section{
+  background-color: #fff;
+  border: 1px solid #DAD7CD;
+  border-radius: 12px;
+  margin: 2%;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.statics-section h1{
+  font-family: 'Saira Semi Condensed', sans-serif;
+  font-size: 26px;
+  color: #18181b;
+}
+
+.statics-data{
+  border:1px solid #d6ccc2;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 5px;
+  font-family: 'Saira Semi Condensed', sans-serif;
+  
+}
+
+.owner-list{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+}
+
+.owner-list .list-data{
+  border: 1px solid #DAD7CD;
+  border-width: 40;
+  padding: 6px;
+  border-radius: 25px;
+  color: #646464;
+  margin-top: 10px;
+  font-size:17px !important;
+  font-family:'Saira Semi Condensed' !important;
+  width:"500px" !important
+}
+
+.user-section{
+  background-color: #fff;
+  border: 1px solid #DAD7CD;
+  margin: 2% ;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.user-section h1{
+  font-family: 'Saira Semi Condensed', sans-serif;
+  font-size: 26px;
+  color: #18181b;
+}
+
+.user-section .user-label{
+    border: 1px solid #DAD7CD;
+    border-radius: 20px;
+    width: 50%;
+}
+
+
+.user-section form .user-address{
+  border: 1px solid #DAD7CD !important;
+  padding: 17px;
+}
+
+.user-section .user-button .deposit-button{
+  color: #fff;
+  background: linear-gradient(to left top,#ff2c9c,#ff287b,#ff395a,#ff5137,#ff6a00);
+  border: 1px solid #ff2c9c ;
+  border-radius: 14px;
+  width: 90px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 40px;
+  box-shadow: none; 
+  transition: all .5s ease;
+  z-index: 0;
+}
+
+.user-section .user-button .deposit-button:hover,.deposit-button:focus{
+  box-shadow: 
+inset -2.9em 0 0 0 white,
+inset 2.9em 0 0 0 white; 
+transition: all .5s ease;
+border-color:1px solid #ff2c9c;
+color: #ff287b;
+cursor: pointer !important;
+}
+
+.deposit-input-field{
+  display: block;
+  width: 50% !important;
+  padding: 0.375rem 0.75rem;
+  font-weight: 600 !important;
+  line-height: 2.2 !important ;
+  color: red;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border: 1px solid rgb(218, 215, 205) !important;
+  border-radius: 8px !important;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.transaction-section{
+  background-color: #fff;
+  border: 1px solid #DAD7CD;
+  margin: 2% ;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.only-owner-action h2{
+  font-family: 'Saira Semi Condensed', sans-serif;
+  font-size: "25px" !important;
+  color: "#18181b";
+  margin-bottom:"20px"
+}
+
+.accordian .accordian-item h2 button{
+  background: green !important;
+}
+
+.accordion-button:not(.collapsed){
+  background-color: rgb(246, 243, 243) !important;
+  color: #212529 !important;
+  outline: none !important;
+}
+
+.head-1{
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Saira Semi Condensed', sans-serif;
+  margin-bottom: -2px;
+ 
+}
+
+.inside-text{
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Saira Semi Condensed', sans-serif;
+}
+
+.inside-form-control{
+  font-weight: 600 !important;
+  border: 1px solid rgb(218, 215, 205) !important;
+  border-radius: 8px !important;
+}
+
+.drop-down-button .inside-button{
+  color: #fff;
+  background: linear-gradient(to left top,#ff2c9c,#ff287b,#ff395a,#ff5137,#ff6a00);
+  border: 1px solid #ff2c9c ;
+  border-radius: 14px;
+  width: 90px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 40px;
+  box-shadow: none; 
+  transition: all .5s ease;
+  z-index: 0;
+}
+
+.drop-down-button .inside-button:hover,.deposit-button:focus{
+  box-shadow: 
+inset -2.9em 0 0 0 white,
+inset 2.9em 0 0 0 white; 
+transition: all .5s ease;
+border-color:1px solid #ff2c9c;
+color: #ff287b;
+cursor: pointer !important;
+}
+.input-field .form-select:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #e2e3e5;
+} 
+.only-owner-action .accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
