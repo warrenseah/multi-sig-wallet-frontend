@@ -150,15 +150,7 @@ cursor: pointer !important;
     margin-top: 1rem!important;
 }
 
-/* 
-*:focus {
-  outline: none;
-} */
 
-textarea:focus, select:focus{
-  outline: none;
-  border: none;
-}
 .form-control:focus {
   border-color: inherit;
   -webkit-box-shadow: none;
@@ -351,11 +343,7 @@ border-color:1px solid #ff2c9c;
 color: #ff287b;
 cursor: pointer !important;
 }
-.input-field .form-select:focus {
-  outline: none;
-  box-shadow: none;
-  border-color: #e2e3e5;
-} 
+
 .only-owner-action .accordion-button:focus {
   box-shadow: none;
   outline: none;

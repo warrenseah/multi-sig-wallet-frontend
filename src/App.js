@@ -1,4 +1,3 @@
-// import "./App.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -8,8 +7,6 @@ import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
 
 import ScContract from "./components/ScContract";
-import Sidebar from "./components/Sidebar";
-import { MultiSignWallet } from "./components/MultiSignWallet";
 function App() {
   const { address, isConnected } = useAccount({
     onConnect({ address, connector, isReconnected }) {
@@ -21,13 +18,6 @@ function App() {
 
   return (
     
-    // <div className="container">
-    //   {/* <div className="row"> */}
-    //   <img className="multiwallet" src={bgImage}/>
-
-
-    //   {/* </div> */}
-      
       <Container style={{ maxWidth: "100%"}}>
         <Row>
           <Col>
@@ -41,7 +31,6 @@ function App() {
         </Row>
         {isConnected && <ScContract userAddress={address} />}
       </Container>
-    // </div>
   )
 }
 

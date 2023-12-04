@@ -10,8 +10,6 @@ import UserFeatures from "./UserFeatures";
 
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import factoryABI from "../artifacts/contracts/Factory.sol/Factory.json";
-import FactoryActions from "./FactoryActions";
-import Tabs from "../utils/Tabs";
 import '../App.css'
 
 const factoryContract = {

@@ -15,7 +15,6 @@ import {
 
 import MultiSigWallet from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import OwnersActions from "./OwnersActions";
-import { MultiSignWallet } from "./MultiSignWallet";
 
 function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
   const multiSigWalletContract = {
