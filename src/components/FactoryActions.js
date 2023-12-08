@@ -1,3 +1,4 @@
+import "../assets/style/FactoryActions.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
@@ -11,8 +12,8 @@ import { isAddress } from "viem";
 import { toast } from "react-toastify";
 import factoryABI from "../artifacts/contracts/Factory.sol/Factory.json";
 import useDebounce from "../hooks/useDebounce";
-import '../App.css'
-
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { IoRemoveCircleOutline } from "react-icons/io5";
 const factoryContract = {
   address: process.env.REACT_APP_FACTORY_ADDRESS,
   abi: factoryABI.abi,
@@ -82,75 +83,83 @@ function FactoryActions({ userAddress, walletRefetch }) {
 
   return (
     <>
-      <h2 style={{fontSize:"40px",color:" #18181b",fontFamily:"'Saira Semi Condensed', sans-serif'",marginTop : "-2px"}}>Create New Wallet</h2>
-      <Form>
-        <Form.Group className="mb-3" controlId="formOwnerAddress">
-          <Form.Label style={{fontSize: "17px",fontWeight: "500", }}>Owner Address</Form.Label>
-          {formRows.map((row, index) => (
-            <Form.Control
-            style={{marginBottom:"15px" }}
-              key={row.id}
-              type="text"
-              placeholder={`Enter address ${row.id}`}
-              onChange={(e) => addAddressHandler(index, e.target.value)}
-            />
-          ))}
-          <div>
-          <Button
-          style={{boxShadow:"none"}}
-          variant="success"
-          onClick={() => {
-            setFormRows([...formRows, { id: formRows.length + 1 }]);
-          }}
-        >
-          +
-        </Button>{" "}
-        <Button
-          style={{boxShadow:"none", widows:"10px"}}
-          variant="danger"
-          onClick={() => {
-            if (formRows.length > 1) {
-              handleRmRow();
-            }
-          }}
-        >
-          -
-        </Button></div>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formQuorem">
-          <Form.Label style={{fontSize: "17px",fontWeight: "500",marginTop:"5px"}}>Quorem</Form.Label>
-          <Form.Control
-            type="number"
-            step="1"
-            placeholder="Enter a number"
-            onChange={(e) => setQuoremRequired(e.target.value)}
-            value={quoremRequired}
-          />
-        </Form.Group>
-        <Button
-        className="displayButton mt-1"
-          // disabled={!createWrite || isLoading}
-          variant="danger"
-          onClick={() => {
-            // console.log("formRows: ", formRows);
-            // console.log("debouncedQuorem: ", debouncedQuorem);
-            // console.log("preparing: ", prepareAddresses());
-            createWrite?.();
-          }}
-        >
-          {isLoading ? "Creating..." : "Create"}
-        </Button>
-        {isSuccess && (
-          <div>
-            Created a new wallet successfully!
-            <div>
-              <a href={`https://etherscan.io/tx/${createData?.hash}`}>
-                Etherscan
-              </a>
+      <div className="create-wallet-section">
+        <h2 className="fs-2">Create New Wallet</h2>
+        <Form>
+          <Form.Group className="mb-3" controlId="formOwnerAddress">
+            <Form.Label>Owner Address</Form.Label>
+            <div className="">
+              <div>
+                {formRows.map((row, index) => (
+                  <Form.Control
+                    className="address-input"
+                    key={row.id}
+                    type="text"
+                    placeholder={`Enter address ${row.id}`}
+                    onChange={(e) => addAddressHandler(index, e.target.value)}
+                  />
+                ))}
+              </div>
+              <div>
+                <Button
+                  className="add-remove-btn rounded-4"
+                  variant="danger"
+                  onClick={() => {
+                    setFormRows([...formRows, { id: formRows.length + 1 }]);
+                  }}
+                >
+                  <IoIosAddCircleOutline size={25} />
+                </Button>{" "}
+                <Button
+                  className="add-remove-btn rounded-4"
+                  variant="danger"
+                  onClick={() => {
+                    if (formRows.length > 1) {
+                      handleRmRow();
+                    }
+                  }}
+                >
+                  <IoRemoveCircleOutline size={25} />
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
-      </Form>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formQuorem">
+            <Form.Label>Quorem</Form.Label>
+            <Form.Control
+              className="address-input"
+              type="number"
+              step="1"
+              placeholder="Enter a number"
+              onChange={(e) => setQuoremRequired(e.target.value)}
+              value={quoremRequired}
+            />
+          </Form.Group>
+          <Button
+            className="create-button rounded-4"
+            disabled={!createWrite || isLoading}
+            variant="danger"
+            onClick={() => {
+              // console.log("formRows: ", formRows);
+              // console.log("debouncedQuorem: ", debouncedQuorem);
+              // console.log("preparing: ", prepareAddresses());
+              createWrite?.();
+            }}
+          >
+            {isLoading ? "Creating..." : "Create"}
+          </Button>
+          {isSuccess && (
+            <div>
+              Created a new wallet successfully!
+              <div>
+                <a href={`https://etherscan.io/tx/${createData?.hash}`}>
+                  Etherscan
+                </a>
+              </div>
+            </div>
+          )}
+        </Form>
+      </div>
     </>
   );
 }

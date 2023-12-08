@@ -1,3 +1,4 @@
+import "./App.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -17,21 +18,20 @@ function App() {
   // console.log("userAddress: ", address);
 
   return (
-    
-      <Container style={{ maxWidth: "100%"}}>
-        <Row>
-          <Col>
-           <div className = 'd-flex justify-content-between'>
+    <Container fluid>
+      <Row>
+        <Col>
+          <div className="d-flex justify-content-between flex-wrap align-items-baseline top-container">
             <h1 className="logo">MultiSignWallet</h1>
-            <div className = 'connection-button'>
-            <ConnectButton/>
+            <div className="connection-button">
+              <ConnectButton />
             </div>
-           </div>
-          </Col>
-        </Row>
-        {isConnected && <ScContract userAddress={address} />}
-      </Container>
-  )
+          </div>
+        </Col>
+      </Row>
+      {isConnected && <ScContract userAddress={address} />}
+    </Container>
+  );
 }
 
 export default App;

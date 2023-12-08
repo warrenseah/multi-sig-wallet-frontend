@@ -1,10 +1,10 @@
+import "../assets/style/UserFeatures.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { formatEther, parseEther } from "viem";
 import { toast } from "react-toastify";
 import useDebounce from "../hooks/useDebounce";
-
 import {
   usePrepareContractWrite,
   useContractWrite,
@@ -121,116 +121,87 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
   return (
     <>
       <div>
-        <div className="user-section mt-4"><h1>User</h1>
-        <Form className="mt-4">
-          <Form.Group
-            className="mb-3 d-flex user-label"
-         
-            controlId="formUserAddress"
-          >
-            <Form.Label
-          
-              style={{
-                fontFamily: "Saira Semi Condensed, sans-serif",
-                fontSize: "17px",
-                color: "#18181b",
-                width: "120px",
-                marginTop: "15px",
-                marginLeft: "17px",
-                marginBottom: "13px",
-              }}
+        <div className="user-section mt-4">
+          <h1>User</h1>
+          <Form className="mt-4">
+            <Form.Group
+              className="mb-3 d-flex user-label"
+              controlId="formUserAddress"
             >
-              User address:
-            </Form.Label>
-            <Form.Control
-              style={{
-                fontFamily: "Saira Semi Condensed, sans-serif",
-                fontSize: "17px",
-                color: "#18181b",
-                marginTop: "6px",
-              }}
-              type="text"
-              placeholder={userAddress}
-              plaintext
-              readOnly
-            />
-          </Form.Group>
-          <div>
-            <Form.Group className="mb-3" controlId="formDepositEther">
-              <Form.Label
-                style={{ fontFamily: "Saira Semi Condensed, sans-serif" }}
-              >
-                Deposit Ether
-              </Form.Label>
+              <Form.Label className="user-address">User address:</Form.Label>
               <Form.Control
-                className="deposit-input-field"
-                type="number"
-                step="0.000001"
-                placeholder="Enter amount in ether"
-                onChange={onChangeDeposit}
+                className="mt-1 responsive"
+                type="text"
+                placeholder={userAddress}
+                plaintext
+                readOnly
               />
             </Form.Group>
-
-            <div className="user-button">
-              <Button
-                className="deposit-button"
-                // disabled={!depositWrite || depositIsLoading}
-                variant="danger"
-                onClick={() => depositWrite?.()}
-              >
-                {depositIsLoading ? "Depositing..." : "Deposit"}
-              </Button>
-            </div>
-          </div>
-
-          {depositIsSuccess && (
             <div>
-              Successfully deposited {depositAmt} ETH!
-              <div>
-                <a
-                  href={`https://etherscan.io/tx/${writeData?.hash}`}
-                  target="_blank"
-                  rel="noreferrer"
+              <Form.Group className="mb-3" controlId="formDepositEther">
+                <Form.Label>Deposit Ether</Form.Label>
+                <Form.Control
+                  className="deposit-input-field"
+                  type="number"
+                  step="0.000001"
+                  placeholder="Enter amount in ether"
+                  onChange={onChangeDeposit}
+                />
+              </Form.Group>
+
+              <div className="user-button">
+                <Button
+                  className="deposit-button"
+                  disabled={!depositWrite || depositIsLoading}
+                  variant="danger"
+                  onClick={() => depositWrite?.()}
                 >
-                  Etherscan
-                </a>
+                  {depositIsLoading ? "Depositing..." : "Deposit"}
+                </Button>
               </div>
             </div>
-          )}
-          {(prepareDepositIsError || depositIsError) && (
-            <div>Error: {(prepareDepositError || depositError)?.message}</div>
-          )}
-        </Form>
+
+            {depositIsSuccess && (
+              <div>
+                Successfully deposited {depositAmt} ETH!
+                <div>
+                  <a
+                    href={`https://etherscan.io/tx/${writeData?.hash}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Etherscan
+                  </a>
+                </div>
+              </div>
+            )}
+            {(prepareDepositIsError || depositIsError) && (
+              <div className="custom-word-wrap">
+                Error: {(prepareDepositError || depositError)?.message}
+              </div>
+            )}
+          </Form>
         </div>
         <div className="transaction-section">
-        <div className=" mt-6">
-       <h2
-          style={{
-            fontFamily: "Saira Semi Condensed, sans-serif",
-            fontSize: "26px",
-            color: "#18181b",
-          }}
-        >
-          Transaction Approval List
-        </h2>
-        {readIsLoading ? (
-          <p>Loading transaction list...</p>
-        ) : (
-          <ul>
-            {unapprovedTxns.map((txn) => (
-              <li key={txn.id}>{`id ${txn.id} || To=${
-                txn?.to
-              } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
-                txn?.approvals
-              } || Sent: ${txn?.sent}`}</li>
-            ))}
-          </ul>
-        )}
-        <OwnersActions scAddress={scAddress} isOwner={isOwner} />
-       </div>
-      </div>
+          <div className=" mt-6">
+            <h2 className="fs-2">Transaction Approval List</h2>
+            {readIsLoading ? (
+              <p>Loading transaction list...</p>
+            ) : (
+              <ul>
+                {unapprovedTxns.map((txn) => (
+                  <li key={txn.id}>{`id ${txn.id} || To=${
+                    txn?.to
+                  } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
+                    txn?.approvals
+                  } || Sent: ${txn?.sent}`}</li>
+                ))}
+              </ul>
+            )}
+            <OwnersActions scAddress={scAddress} isOwner={isOwner} />
+          </div>
         </div>
-      
+      </div>
     </>
   );
 }

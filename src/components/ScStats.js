@@ -1,3 +1,4 @@
+import "../assets/style/ScStats.css";
 import { useContractEvent, useBalance } from "wagmi";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -40,24 +41,25 @@ function ScStats({ scAddress, userAddress, quorem, owners }) {
       <Row>
         <Col>
           <div className="statics-section mt-4">
-          <h1>Smart Contract Stats</h1>
-          <div className="d-flex gap-5 mt-3">
-          <p className = "statics-data">Contract Address: {scAddress}</p>
-          <p className="statics-data"
-           >
-            Balance: {balanceData?.formatted} {balanceData?.symbol}
-          </p>
-          <p className="statics-data">Quorem: {quorem || ""}</p>
-          </div>
-          <div>
-            <h3 style={{fontSize:"25px",fontFamily:'Saira Semi Condensed'}}>Owner</h3>
-          <ul className="owner-list">
-            {owners?.map((owner) => (
-               <li className="list-data" style={{fontSize:"17px",fontFamily:'Saira Semi Condensed',width:"500px"}} key={owner}><MdAccountCircle size={35}
-               /><span style={{marginLeft:"12px"}}>{ owner}</span></li>
-            ))}
-          </ul>
-          </div>
+            <h2 className="fs-2">Smart Contract Stats</h2>
+            <div className="d-flex gap-5 mt-3 responsive">
+              <p className="statics-data">Contract Address: {scAddress}</p>
+              <p className="statics-data">
+                Balance: {balanceData?.formatted} {balanceData?.symbol}
+              </p>
+              <p className="statics-data">Quorem: {quorem || ""}</p>
+            </div>
+            <div>
+              <h3 className="fs-4">Owner</h3>
+              <ul className="owner-list">
+                {owners?.map((owner) => (
+                  <li className="list-data" key={owner}>
+                    <MdAccountCircle size={35} />
+                    <span>{owner}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Col>
       </Row>

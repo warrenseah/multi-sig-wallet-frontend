@@ -1,20 +1,16 @@
-
+import "../assets/style/ScContract.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { useContractRead, useContractReads } from "wagmi";
 import { isAddress } from "viem";
-import '../App.css';
 import ScStats from "./ScStats";
 import UserFeatures from "./UserFeatures";
-
 import contractABI from "../artifacts/contracts/MultiSigWallet.sol/MultiSigWallet.json";
 import factoryABI from "../artifacts/contracts/Factory.sol/Factory.json";
-import '../App.css'
-
+import FactoryActions from "./FactoryActions";
 const factoryContract = {
   address: process.env.REACT_APP_FACTORY_ADDRESS,
-  // address:"0x5FbDB2315678afecb367f032d93F642f64180aa3",
   abi: factoryABI.abi,
 };
 
@@ -32,7 +28,7 @@ function ScContract({ userAddress }) {
     functionName: "getWalletList",
   });
 
-  console.log("factoryReadData: ", userAddress);
+  // console.log("factoryReadData: ", factoryReadData);
 
   const smartContract = {
     address: scAddress,
@@ -62,73 +58,69 @@ function ScContract({ userAddress }) {
 
   return (
     <>
-      <div style={{ margin: "5px" }}>
+      <div className="mt-5">
         <div>
           {factoryReadIsSuccess && (
-            <> <div className="factory-section">
-              <div className="factory-address">
-                <span>Factory Address:</span>
-                <span className="factory-address-value">{process.env.REACT_APP_FACTORY_ADDRESS}</span>
+            <>
+              {" "}
+              <div className="factory-section">
+                <div className="factory-address">
+                  <span>Factory Address:</span>
+                  <span className="factory-address-value">
+                    {process.env.REACT_APP_FACTORY_ADDRESS}
+                  </span>
+                </div>
+                <div className="input-field">
+                  <Form.Select
+                    disabled={factoryIsLoading}
+                    aria-label="Default select example"
+                    className="mt-3 mb-2 factory-address-form"
+                    onChange={(e) => {
+                      if (isAddress(e.target.value)) {
+                        setScAddress(e.target.value);
+                      }
+                    }}
+                  >
+                    <option>Select Contract Address</option>
+                    {}
+                    {factoryReadData?.map((address, index) => (
+                      <option className="fs-5" key={address} value={address}>
+                        {`walletID #${index + 1} ${address}`}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </div>
+                <div className="factory-button">
+                  <Button
+                    className="displayButton"
+                    disabled={!isAddress(scAddress) || factoryIsLoading}
+                    variant="danger"
+                    onClick={() => {
+                      // console.log(addressIsReady);
+                      setAddressIsReady(true);
+                    }}
+                  >
+                    Display
+                  </Button>{" "}
+                  <Button
+                    className="close-btn"
+                    disabled={!addressIsReady || factoryIsLoading}
+                    variant="danger"
+                    onClick={() => {
+                      // console.log(addressIsReady);
+                      setAddressIsReady(false);
+                    }}
+                  >
+                    Close Contract
+                  </Button>
+                </div>
               </div>
-              <div className="input-field">
-                <Form.Select
-                  disabled={factoryIsLoading}
-                  aria-label="Default select example"
-                  className="mt-3 mb-2 factory-address-form "
-                  onChange={(e) => {
-                    // console.log(e.target.value);
-                    if (isAddress(e.target.value)) {
-                      setScAddress(e.target.value);
-                    }
-                  }}
-                >
-
-                  <option>Select Contract Address</option>{
-                  }
-                  {factoryReadData?.map((address, index) => (
-                    <option style={{ fontSize: "20px" }} key={address} value={address}>
-                      {`walletID #${index + 1} ${address}`}
-                    </option>
-                  ))}
-                </Form.Select>
-              </div>
-              <div className="factory-button">
-                <Button
-                  className="displayButton"
-                  disabled={!isAddress(scAddress) || factoryIsLoading}
-                  variant="danger"
-                  onClick={() => {
-                    // console.log(addressIsReady);
-                    setAddressIsReady(true);
-                  }}
-                >
-                  Display
-                </Button>{" "}
-                <Button
-                  className="close-btn"
-                  disabled={!addressIsReady || factoryIsLoading}
-                  variant="danger"
-                  onClick={() => {
-                    // console.log(addressIsReady);
-                    setAddressIsReady(false);
-                  }}
-                >
-                  Close Contract
-                </Button>
-              </div>
-            </div>
-              {/* <div>
-              <FactoryActions
-                userAddress={userAddress}
-                walletRefetch={walletRefetch}
-              />
-            </div> */}
             </>
           )}
         </div>
 
         {addressIsReady && (
-          <div >
+          <div>
             <ScStats
               scAddress={scAddress}
               userAddress={userAddress}
@@ -143,8 +135,13 @@ function ScContract({ userAddress }) {
             />
           </div>
         )}
+        <div>
+          <FactoryActions
+            userAddress={userAddress}
+            walletRefetch={walletRefetch}
+          />
+        </div>
       </div>
-
     </>
   );
 }

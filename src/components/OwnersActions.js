@@ -1,3 +1,4 @@
+import "../assets/style/OwnersActions.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
@@ -90,19 +91,18 @@ function OwnersActions({ scAddress, isOwner }) {
   return (
     <>
       <div className="only-owner-action">
-        <h2 >Only Owner Actions</h2>
+        <h2> Only Owner Actions</h2>
         <Accordion alwaysOpen>
           <Accordion.Item eventKey="0">
-            <Accordion.Header style={{lineHeight:"1px"}} >
-              <p className="head-1">
-                Create Withdrawal
-                </p>
-              </Accordion.Header>
+            <Accordion.Header>
+              <p className="head-1">Create Withdrawal</p>
+            </Accordion.Header>
             <Accordion.Body>
               <Form>
                 <Form.Group className="mb-3" controlId="formCreateTxn">
-                  <Form.Label className="inside-text" >To Address</Form.Label>
-                  <Form.Control className="inside-form-control"
+                  <Form.Label className="inside-text">To Address</Form.Label>
+                  <Form.Control
+                    className="inside-form-control"
                     type="text"
                     placeholder="Enter address"
                     onChange={onChangeAddrCreateTxn}
@@ -110,28 +110,29 @@ function OwnersActions({ scAddress, isOwner }) {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formEthAmount">
-                  <Form.Label className="inside-text" >Amount</Form.Label>
-                  <Form.Control className="inside-form-control"
+                  <Form.Label className="inside-text">Amount</Form.Label>
+                  <Form.Control
+                    className="inside-form-control"
                     type="number"
                     step="0.000001"
                     placeholder="Enter Eth Amount"
                     onChange={onChangeEthCreateTxn}
                   />
                 </Form.Group>
-              <div className="drop-down-button">
-              <Button
-                className="inside-button"
-                  // disabled={!createWrite || createIsLoading}
-                  variant="primary"
-                  onClick={() => {
-                    // console.log("toAddress: ", toAddress);
-                    // console.log("withdrawEther: ", withdrawEthAmt);
-                    createWrite?.();
-                  }}
-                >
-                  {createIsLoading ? "Creating..." : "Create"}
-                </Button>
-              </div>
+                <div className="drop-down-button">
+                  <Button
+                    className="inside-button"
+                    disabled={!createWrite || createIsLoading}
+                    variant="danger"
+                    onClick={() => {
+                      // console.log("toAddress: ", toAddress);
+                      // console.log("withdrawEther: ", withdrawEthAmt);
+                      createWrite?.();
+                    }}
+                  >
+                    {createIsLoading ? "Creating..." : "Create"}
+                  </Button>
+                </div>
                 {createIsSuccess && (
                   <div>
                     Successfully created a withdrawal transaction!
@@ -146,23 +147,26 @@ function OwnersActions({ scAddress, isOwner }) {
                     </div>
                   </div>
                 )}
+
                 {(prepareCreateIsError || createIsError) && (
-                  <div>Error: {(prepareCreateError || createError)?.message}</div>
+                  <div className="custom-word-wrap">
+                    Error: {(prepareCreateError || createError)?.message}
+                  </div>
                 )}
               </Form>
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
-            <Accordion.Header  style={{lineHeight:"1px"}}> <p className="head-1">
-            Approve Withdrawal
-                </p>
-              
-              </Accordion.Header>
+            <Accordion.Header>
+              {" "}
+              <p className="head-1">Approve Withdrawal</p>
+            </Accordion.Header>
             <Accordion.Body>
               <Form>
                 <Form.Group className="mb-3" controlId="formApproveId">
-                  <Form.Label className="inside-text" >Txn Id</Form.Label>
-                  <Form.Control className="inside-form-control"
+                  <Form.Label className="inside-text">Txn Id</Form.Label>
+                  <Form.Control
+                    className="inside-form-control"
                     type="number"
                     step="1"
                     placeholder="Enter Id"
@@ -170,19 +174,19 @@ function OwnersActions({ scAddress, isOwner }) {
                     value={approveId}
                   />
                 </Form.Group>
-              <div className="drop-down-button">
-              <Button
-                className="inside-button"
-                  // disabled={!approveWrite || approveIsLoading}
-                  variant="primary"
-                  onClick={() => {
-                    // console.log("approveId: ", approveId);
-                    approveWrite?.();
-                  }}
-                >
-                  {approveIsLoading ? "Approving..." : "Approve"}
-                </Button>
-              </div>
+                <div className="drop-down-button">
+                  <Button
+                    className="inside-button"
+                    disabled={!approveWrite || approveIsLoading}
+                    variant="danger"
+                    onClick={() => {
+                      // console.log("approveId: ", approveId);
+                      approveWrite?.();
+                    }}
+                  >
+                    {approveIsLoading ? "Approving..." : "Approve"}
+                  </Button>
+                </div>
                 {approveIsSuccess && (
                   <div>
                     Successfully approve transactionId #{approveId}!
@@ -198,7 +202,7 @@ function OwnersActions({ scAddress, isOwner }) {
                   </div>
                 )}
                 {(prepareApproveIsError || approveIsError) && (
-                  <div>
+                  <div className="custom-word-wrap">
                     Error: {(prepareApproveError || approveError)?.message}
                   </div>
                 )}
@@ -207,7 +211,6 @@ function OwnersActions({ scAddress, isOwner }) {
           </Accordion.Item>
         </Accordion>
       </div>
-
     </>
   );
 }
