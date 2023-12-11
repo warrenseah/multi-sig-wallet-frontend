@@ -119,6 +119,13 @@ function ScContract({ userAddress }) {
           )}
         </div>
 
+        <div>
+          <FactoryActions
+            userAddress={userAddress}
+            walletRefetch={walletRefetch}
+          />
+        </div>
+
         {addressIsReady && (
           <div>
             <ScStats
@@ -135,12 +142,6 @@ function ScContract({ userAddress }) {
             />
           </div>
         )}
-        <div>
-          <FactoryActions
-            userAddress={userAddress}
-            walletRefetch={walletRefetch}
-          />
-        </div>
       </div>
     </>
   );
