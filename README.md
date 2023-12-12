@@ -44,7 +44,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Instructions
 
-Load main wallet address into Metamask under Sepolia Ethereum testnet and click connect button. Make sure you have sepolia Eth in your wallet addresses.
+Load main wallet address into Metamask under Sepolia Ethereum testnet and click connect button. Make sure you have sepolia Eth in your wallet addresses. To get some Sepolia Eth, head to this [faucet](https://sepoliafaucet.com/) and also register an account with alchemy.
 
 Under 'Create New Wallet', specify 3 wallet addresses and specify 2 for quorem. Click Create button. Wait for transaction receipt before proceeding to the next step.
 
