@@ -72,9 +72,9 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
   // Add id to return readData transaction List
   const txnsWithId = !readIsLoading
     ? readData[0]?.result?.map((txn, index) => ({
-        ...txn,
-        id: index,
-      }))
+      ...txn,
+      id: index,
+    }))
     : [];
 
   // Filter for unapprove transactions only
@@ -188,22 +188,49 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
             {readIsLoading ? (
               <p>Loading transaction list...</p>
             ) : (
-              <ul>
-                {unapprovedTxns.map((txn) => (
-                  <li key={txn.id}>{`id ${txn.id} || To=${
-                    txn?.to
-                  } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
-                    txn?.approvals
-                  } || Sent: ${txn?.sent}`}</li>
-                ))}
-              </ul>
+              <table className="table table-hover">
+                <thead className="table-light">
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">To</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Approval</th>
+                    <th scope="col">Sent</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {unapprovedTxns.map((txn) => {
+                    return (
+                      <tr key={txn.id}>
+                        <td>{txn.id}</td>
+                        <td>{txn?.to}</td>
+                        <td>{formatEther(txn?.amount)} Eth</td>
+                        <td>{txn?.approvals}</td>
+                        <td>{txn?.sent}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+
+              //             <ul>
+              // {unapprovedTxns.map((txn) => (
+              // <li key={txn.id}>{` id ${txn.id} || To=${
+              // txn?.to
+              // } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
+              // txn?.approvals
+              // } || Sent: ${txn?.sent}`}</li>
+              // ))}
+              // </ul> 
+
             )}
             <OwnersActions scAddress={scAddress} isOwner={isOwner} />
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }
 
 export default UserFeatures;
+

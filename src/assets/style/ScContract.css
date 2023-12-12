@@ -48,6 +48,7 @@
   padding: 8px;
   transition: all 0.5s ease;
   box-shadow: none;
+  min-width: fit-content;
 }
 
 .factory-button .close-btn:hover,
