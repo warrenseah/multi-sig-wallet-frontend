@@ -205,25 +205,24 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
                         <td>{txn.id}</td>
                         <td>{txn?.to}</td>
                         <td>{formatEther(txn?.amount)} Eth</td>
-                        <td>{txn?.approvals}</td>
-                        <td>{txn?.sent}</td>
+                        <td>{`${txn?.approvals}`}</td>
+                        <td>{`${txn?.sent}`}</td>
                       </tr>
                     );
                   })}
                 </tbody>
               </table>
-
-              //             <ul>
-              // {unapprovedTxns.map((txn) => (
-              // <li key={txn.id}>{` id ${txn.id} || To=${
-              // txn?.to
-              // } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
-              // txn?.approvals
-              // } || Sent: ${txn?.sent}`}</li>
-              // ))}
-              // </ul> 
-
             )}
+            {/* <ul>
+              {unapprovedTxns.map((txn) => (
+              <li key={txn.id}>{` id ${txn.id} || To=${
+              txn?.to
+              } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
+              txn?.approvals
+              } || Sent: ${txn?.sent}`}</li>
+              ))}
+              </ul> 
+               */}
             <OwnersActions scAddress={scAddress} isOwner={isOwner} />
           </div>
         </div>
