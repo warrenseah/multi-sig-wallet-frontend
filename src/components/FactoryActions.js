@@ -138,7 +138,7 @@ function FactoryActions({ userAddress, walletRefetch }) {
           <div>
             Created a new wallet successfully!
             <div>
-              <a href={`https://etherscan.io/tx/${createData?.hash}`}>
+              <a href={`https://sepolia.etherscan.io/tx/${createData?.hash}`}>
                 Etherscan
               </a>
             </div>
