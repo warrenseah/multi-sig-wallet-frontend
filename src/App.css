@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(246, 243, 243) !important;
+}
+
 .App {
   text-align: center;
 }
@@ -36,3 +40,25 @@
     transform: rotate(360deg);
   }
 }
+
+.logo {
+  font-size: 40px;
+  color: #18181b;
+  font-family: "Saira Semi Condensed", sans-serif;
+}
+
+.top-container {
+  margin-top: 2%;
+  margin-left: 2%;
+}
+.connection-button {
+  margin-top: 20px;
+  margin-right: 33px;
+}
+
+.custom-word-wrap {
+  word-wrap: break-word;
+  margin-top: 15px;
+  line-height: 25px;
+}
+

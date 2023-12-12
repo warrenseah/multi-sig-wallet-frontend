@@ -1,0 +1,63 @@
+.accordian .accordian-item h2 button {
+  background: green !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: rgb(246, 243, 243) !important;
+  color: #212529 !important;
+  outline: none !important;
+}
+
+.head-1 {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Saira Semi Condensed", sans-serif;
+  margin-bottom: -2px;
+}
+
+.inside-text {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Saira Semi Condensed", sans-serif;
+}
+
+.inside-form-control {
+  font-weight: 600 !important;
+  border: 1px solid rgb(218, 215, 205) !important;
+  border-radius: 8px !important;
+}
+
+.drop-down-button .inside-button {
+  color: #fff;
+  background: linear-gradient(
+    to left top,
+    #ff2c9c,
+    #ff287b,
+    #ff395a,
+    #ff5137,
+    #ff6a00
+  );
+  border: 1px solid #ff2c9c;
+  border-radius: 14px;
+  width: 90px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 40px;
+  box-shadow: none;
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.drop-down-button .inside-button:hover,
+.deposit-button:focus {
+  box-shadow: inset -2.9em 0 0 0 white, inset 2.9em 0 0 0 white;
+  transition: all 0.5s ease;
+  border-color: 1px solid #ff2c9c;
+  color: #ff287b;
+  cursor: pointer !important;
+}
+
+.only-owner-action .accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
