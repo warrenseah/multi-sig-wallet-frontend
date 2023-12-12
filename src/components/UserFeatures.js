@@ -1,10 +1,10 @@
+import "../assets/style/UserFeatures.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { formatEther, parseEther } from "viem";
 import { toast } from "react-toastify";
 import useDebounce from "../hooks/useDebounce";
-
 import {
   usePrepareContractWrite,
   useContractWrite,
@@ -120,68 +120,113 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
 
   return (
     <>
-      <h1>User</h1>
-
-      <Form>
-        <Form.Group className="mb-3" controlId="formUserAddress">
-          <Form.Label>User address</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder={userAddress}
-            plaintext
-            readOnly
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formDepositEther">
-          <Form.Label>Deposit Ether</Form.Label>
-          <Form.Control
-            type="number"
-            step="0.000001"
-            placeholder="Enter amount in ether"
-            onChange={onChangeDeposit}
-          />
-        </Form.Group>
-        <Button
-          disabled={!depositWrite || depositIsLoading}
-          variant="primary"
-          onClick={() => depositWrite?.()}
-        >
-          {depositIsLoading ? "Depositing..." : "Deposit"}
-        </Button>
-        {depositIsSuccess && (
-          <div>
-            Successfully deposited {depositAmt} ETH!
+      <div>
+        <div className="user-section mt-4">
+          <h1>User</h1>
+          <Form className="mt-4">
+            <Form.Group
+              className="mb-3 d-flex user-label"
+              controlId="formUserAddress"
+            >
+              <Form.Label className="user-address">User address:</Form.Label>
+              <Form.Control
+                className="mt-1 responsive"
+                type="text"
+                placeholder={userAddress}
+                plaintext
+                readOnly
+              />
+            </Form.Group>
             <div>
-              <a
-                href={`https://sepolia.etherscan.io/tx/${writeData?.hash}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Etherscan
-              </a>
+              <Form.Group className="mb-3" controlId="formDepositEther">
+                <Form.Label>Deposit Ether</Form.Label>
+                <Form.Control
+                  className="deposit-input-field"
+                  type="number"
+                  step="0.000001"
+                  placeholder="Enter amount in ether"
+                  onChange={onChangeDeposit}
+                />
+              </Form.Group>
+
+              <div className="user-button">
+                <Button
+                  className="deposit-button"
+                  disabled={!depositWrite || depositIsLoading}
+                  variant="danger"
+                  onClick={() => depositWrite?.()}
+                >
+                  {depositIsLoading ? "Depositing..." : "Deposit"}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
-        {(prepareDepositIsError || depositIsError) && (
-          <div>Error: {(prepareDepositError || depositError)?.message}</div>
-        )}
-      </Form>
-      <h2>Transaction Approval List</h2>
-      {readIsLoading ? (
-        <p>Loading transaction list...</p>
-      ) : (
-        <ul>
-          {unapprovedTxns.map((txn) => (
-            <li key={txn.id}>{`id ${txn.id} || To=${
+
+            {depositIsSuccess && (
+              <div>
+                Successfully deposited {depositAmt} ETH!
+                <div>
+                  <a
+                    href={`https://etherscan.io/tx/${writeData?.hash}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Etherscan
+                  </a>
+                </div>
+              </div>
+            )}
+            {(prepareDepositIsError || depositIsError) && (
+              <div className="custom-word-wrap">
+                Error: {(prepareDepositError || depositError)?.message}
+              </div>
+            )}
+          </Form>
+        </div>
+        <div className="transaction-section">
+          <div className=" mt-6">
+            <h2 className="fs-2">Transaction Approval List</h2>
+            {readIsLoading ? (
+              <p>Loading transaction list...</p>
+            ) : (
+              <table className="table table-hover">
+                <thead className="table-light">
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">To</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Approval</th>
+                    <th scope="col">Sent</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {unapprovedTxns.map((txn) => {
+                    return (
+                      <tr key={txn.id}>
+                        <td>{txn.id}</td>
+                        <td>{txn?.to}</td>
+                        <td>{formatEther(txn?.amount)} Eth</td>
+                        <td>{`${txn?.approvals}`}</td>
+                        <td>{`${txn?.sent}`}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+            {/* <ul>
+              {unapprovedTxns.map((txn) => (
+              <li key={txn.id}>{` id ${txn.id} || To=${
               txn?.to
-            } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
+              } || Amount: ${formatEther(txn?.amount)} Eth || Approval: ${
               txn?.approvals
-            } || Sent: ${txn?.sent}`}</li>
-          ))}
-        </ul>
-      )}
-      <OwnersActions scAddress={scAddress} isOwner={isOwner} />
+              } || Sent: ${txn?.sent}`}</li>
+              ))}
+              </ul> 
+               */}
+            <OwnersActions scAddress={scAddress} isOwner={isOwner} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

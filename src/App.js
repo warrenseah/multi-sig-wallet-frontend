@@ -8,7 +8,6 @@ import { useAccount } from "wagmi";
 import { toast } from "react-toastify";
 
 import ScContract from "./components/ScContract";
-
 function App() {
   const { address, isConnected } = useAccount({
     onConnect({ address, connector, isReconnected }) {
@@ -19,17 +18,19 @@ function App() {
   // console.log("userAddress: ", address);
 
   return (
-    <div>
-      <Container>
-        <Row>
-          <Col>
-            <h1>Multi Sig Wallet</h1>
-            <ConnectButton />
-          </Col>
-        </Row>
-        {isConnected && <ScContract userAddress={address} />}
-      </Container>
-    </div>
+    <Container fluid>
+      <Row>
+        <Col>
+          <div className="d-flex justify-content-between flex-wrap align-items-baseline top-container">
+            <h1 className="logo">MultiSignWallet</h1>
+            <div className="connection-button">
+              <ConnectButton />
+            </div>
+          </div>
+        </Col>
+      </Row>
+      {isConnected && <ScContract userAddress={address} />}
+    </Container>
   );
 }
 

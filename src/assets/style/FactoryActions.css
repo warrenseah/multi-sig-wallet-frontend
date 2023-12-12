@@ -1,0 +1,75 @@
+.address-input {
+  width: 50% !important;
+  margin-bottom: 10px;
+}
+
+.create-wallet-section {
+  font-family: "Saira Semi Condensed", sans-serif;
+  background-color: #fff;
+  border: 1px solid #dad7cd;
+  margin: 2%;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.create-wallet-section .create-button {
+  color: #fff;
+  background: linear-gradient(
+    to left top,
+    #ff2c9c,
+    #ff287b,
+    #ff395a,
+    #ff5137,
+    #ff6a00
+  );
+  border: 1px solid #ff2c9c;
+  border-radius: 17px;
+  width: 90px;
+  font-size: 17px;
+  font-weight: 600;
+  height: 40px;
+  box-shadow: none;
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.create-wallet-section .create-button:hover,
+.create-button:focus {
+  box-shadow: inset -2.9em 0 0 0 white, inset 2.9em 0 0 0 white;
+  transition: all 0.5s ease;
+  border-color: 1px solid #ff2c9c;
+  color: #ff287b;
+  cursor: pointer !important;
+}
+
+.create-wallet-section .add-remove-btn {
+  color: #fff;
+  background: linear-gradient(
+    to left top,
+    #ff2c9c,
+    #ff287b,
+    #ff395a,
+    #ff5137,
+    #ff6a00
+  );
+  border: 1px solid #ff2c9c;
+  border-radius: 17px;
+  width: 60px;
+  margin-right: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  height: 40px;
+  box-shadow: none;
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.create-wallet-section .add-remove-btn:hover,
+.add-remove-btn:focus {
+  box-shadow: inset -2.9em 0 0 0 white, inset 2.9em 0 0 0 white;
+  transition: all 0.5s ease;
+  border-color: 1px solid #ff2c9c;
+  color: #ff287b !important;
+  cursor: pointer !important;
+}

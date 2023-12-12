@@ -1,0 +1,129 @@
+.factory-button .displayButton {
+  color: #fff;
+  background: linear-gradient(
+    to left top,
+    #ff2c9c,
+    #ff287b,
+    #ff395a,
+    #ff5137,
+    #ff6a00
+  );
+  border: 1px solid #ff2c9c;
+  border-radius: 14px;
+  width: 90px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 40px;
+  box-shadow: none;
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.factory-button .displayButton:hover,
+.displayButton:focus {
+  box-shadow: inset -2.9em 0 0 0 white, inset 2.9em 0 0 0 white;
+  transition: all 0.5s ease;
+  border-color: 1px solid #ff2c9c;
+  color: #ff287b;
+  cursor: pointer !important;
+}
+
+.factory-button .close-btn {
+  color: #fff;
+  background: linear-gradient(
+    to left top,
+    #ff2c9c,
+    #ff287b,
+    #ff395a,
+    #ff5137,
+    #ff6a00
+  );
+  border: 1px solid #e9edcd;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  width: 108px;
+  border-radius: 14px;
+  height: 40px;
+  padding: 8px;
+  transition: all 0.5s ease;
+  box-shadow: none;
+  min-width: fit-content;
+}
+
+.factory-button .close-btn:hover,
+.close-btn:focus {
+  box-shadow: inset -4.2em 0 0 0 white, inset 4.2em 0 0 0 white;
+  transition: all 0.5s ease;
+  border-color: 1px solid #e9edcd;
+  color: #ff287b;
+  cursor: pointer !important;
+}
+
+.factory-section {
+  background-color: #fff;
+  border: 1px solid #dad7cd;
+  margin: 2%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.factory-section .factory-address span {
+  font-family: "Saira Semi Condensed", sans-serif;
+  font-size: 26px;
+  color: #18181b;
+}
+.factory-address span .factory-address-value {
+  font-family: "Saira Semi Condensed", sans-serif;
+  font-size: 25px;
+  color: #18181b;
+}
+.input-field {
+  width: 70%;
+}
+
+.input-field .factory-address-form {
+  font-weight: 700 !important;
+}
+.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+.mt-3 {
+  margin-top: 1rem !important;
+}
+
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.factory-button {
+  display: flex;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+@media only screen and (max-width: 850px) {
+  .factory-address {
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .factory-section .factory-address span {
+    font-size: 12px;
+  }
+
+  .factory-address span .factory-address-value {
+    font-size: 25px;
+    color: #18181b;
+  }
+
+  .input-field {
+    width: 100%;
+  }
+}
