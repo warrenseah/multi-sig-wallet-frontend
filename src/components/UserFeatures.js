@@ -166,7 +166,7 @@ function UserFeatures({ scAddress, userAddress, quorem, isOwner }) {
                 Successfully deposited {depositAmt} ETH!
                 <div>
                   <a
-                    href={`https://etherscan.io/tx/${writeData?.hash}`}
+                    href={`https://sepolia.etherscan.io/tx/${writeData?.hash}`}
                     target="_blank"
                     rel="noreferrer"
                   >

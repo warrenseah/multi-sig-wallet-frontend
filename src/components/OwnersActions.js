@@ -138,7 +138,7 @@ function OwnersActions({ scAddress, isOwner }) {
                     Successfully created a withdrawal transaction!
                     <div>
                       <a
-                        href={`https://etherscan.io/tx/${createData?.hash}`}
+                        href={`https://sepolia.etherscan.io/tx/${createData?.hash}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -192,7 +192,7 @@ function OwnersActions({ scAddress, isOwner }) {
                     Successfully approve transactionId #{approveId}!
                     <div>
                       <a
-                        href={`https://etherscan.io/tx/${approveData?.hash}`}
+                        href={`https://sepolia.etherscan.io/tx/${approveData?.hash}`}
                         target="_blank"
                         rel="noreferrer"
                       >
