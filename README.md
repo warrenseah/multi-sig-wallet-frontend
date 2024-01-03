@@ -46,11 +46,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 Load main wallet address into Metamask under Sepolia Ethereum testnet and click connect button. Make sure you have sepolia Eth in your wallet addresses. To get some Sepolia Eth, head to this [faucet](https://sepoliafaucet.com/) and also register an account with alchemy.
 
-Under 'Create New Wallet', specify 3 wallet addresses and specify 2 for quorem. Click Create button. Wait for transaction receipt before proceeding to the next step.
+Under 'Create New Wallet', specify 3 wallet addresses and specify 2 for quorum. Click Create button. Wait for transaction receipt before proceeding to the next step.
 
 Under 'Select Contract Address', choose the walletId that was created by you a moment ago from the dropdown list. Next, click Display button.
 
-Under 'Smart Contract Stats', you will find the deployed Multi Sig Wallet which you have just created from the Factory smart contract. You will also find 3 wallet addresses that are the owners of this MultiSigWallet and the quorem. and the balance residing in this wallet address.
+Under 'Smart Contract Stats', you will find the deployed Multi Sig Wallet which you have just created from the Factory smart contract. You will also find 3 wallet addresses that are the owners of this MultiSigWallet and the quorum. and the balance residing in this wallet address.
 
 ## dApp Interactions
 
@@ -69,7 +69,7 @@ Specify a recipient wallet address and the amount in Eth to be withdrawn if this
 
 Specify the withdrawal ID and click Approve button. Once transaction is finished, you will find the approval under the respective transaction item to be incremented by 1.
 
-The moment when approval for any item is increment to be equal to the quorem of the wallet contract, the amount of Eth specified in the withdrawal transaction will be sent to the recipient address. And the item in the transaction approval list will be removed from display.
+The moment when approval for any item is increment to be equal to the quorum of the wallet contract, the amount of Eth specified in the withdrawal transaction will be sent to the recipient address. And the item in the transaction approval list will be removed from display.
 
 This concludes all the functions you can intereact with the Multi Sig Wallet smart contract via this dApp. I hope that you have a wonderful journey into web3. All the best and take care!
 
