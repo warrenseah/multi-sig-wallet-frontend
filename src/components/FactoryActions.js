@@ -125,7 +125,7 @@ function FactoryActions({ userAddress, walletRefetch }) {
             </div>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formQuorem">
-            <Form.Label>Quorem</Form.Label>
+            <Form.Label>Quorum</Form.Label>
             <Form.Control
               className="address-input"
               type="number"

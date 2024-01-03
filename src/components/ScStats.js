@@ -47,7 +47,7 @@ function ScStats({ scAddress, userAddress, quorem, owners }) {
               <p className="statics-data">
                 Balance: {balanceData?.formatted} {balanceData?.symbol}
               </p>
-              <p className="statics-data">Quorem: {quorem || ""}</p>
+              <p className="statics-data">Quorum: {quorem || ""}</p>
             </div>
             <div>
               <h3 className="fs-4">Owner</h3>
