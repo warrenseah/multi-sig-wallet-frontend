@@ -22,7 +22,7 @@ function App() {
       <Row>
         <Col>
           <div className="d-flex justify-content-between flex-wrap align-items-baseline top-container">
-            <h1 className="logo">MultiSignWallet</h1>
+            <h1 className="logo">Multi Sig Wallet</h1>
             <div className="connection-button">
               <ConnectButton />
             </div>
