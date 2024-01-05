@@ -27,7 +27,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient } = configureChains(
-  [sepolia],
+  [sepolia, hardhat],
   [
     alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_KEY }),
     publicProvider(),
@@ -79,7 +79,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} initialChain={hardhat}>
+      <RainbowKitProvider chains={chains} initialChain={sepolia}>
         <ToastContainer />
         <App />
       </RainbowKitProvider>
