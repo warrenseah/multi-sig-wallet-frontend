@@ -13,6 +13,7 @@ const factoryContract = {
   address: process.env.REACT_APP_FACTORY_ADDRESS,
   abi: factoryABI.abi,
 };
+// console.log(factoryContract);
 
 function ScContract({ userAddress }) {
   const [addressIsReady, setAddressIsReady] = useState(false);
