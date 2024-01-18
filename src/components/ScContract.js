@@ -56,7 +56,6 @@ function ScContract({ userAddress }) {
   const isOwner = owners?.includes(userAddress);
 
   // console.log("isOwner: ", isOwner);
-  console.log("factoryReadSuccess: ", factoryReadIsSuccess);
 
   return (
     <>
