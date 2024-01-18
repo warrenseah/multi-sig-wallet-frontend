@@ -2,6 +2,8 @@
 
 This is the frontend files ReactJS for the Multi Sig Wallet Smart Contracts developed under the Hardhat Framework. You can find the [hardhat github project here](https://github.com/warrenseah/multi-sig-wallet).It is required prior to running this ReactJS app that you spin a local hardhat blockchain network. The RainbowKit Wallet is set to detect for the hardhat local blockchain network in order for this codebase to work.
 
+The dApp is now live on Sepolia testnet. [View here](https://main--sage-squirrel-518549.netlify.app/).
+
 ## Install All Dependencies
 
 `npm install`
