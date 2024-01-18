@@ -13,7 +13,7 @@ const factoryContract = {
   address: process.env.REACT_APP_FACTORY_ADDRESS,
   abi: factoryABI.abi,
 };
-
+console.log("debugging...");
 console.log(factoryContract);
 
 function ScContract({ userAddress }) {
