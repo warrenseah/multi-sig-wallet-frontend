@@ -14,6 +14,8 @@ const factoryContract = {
   abi: factoryABI.abi,
 };
 
+console.log(factoryContract);
+
 function ScContract({ userAddress }) {
   const [addressIsReady, setAddressIsReady] = useState(false);
   const [scAddress, setScAddress] = useState();
