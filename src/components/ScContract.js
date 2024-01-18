@@ -13,8 +13,7 @@ const factoryContract = {
   address: process.env.REACT_APP_FACTORY_ADDRESS,
   abi: factoryABI.abi,
 };
-console.log("debugging...");
-console.log(factoryContract);
+// console.log(factoryContract);
 
 function ScContract({ userAddress }) {
   const [addressIsReady, setAddressIsReady] = useState(false);
@@ -57,6 +56,7 @@ function ScContract({ userAddress }) {
   const isOwner = owners?.includes(userAddress);
 
   // console.log("isOwner: ", isOwner);
+  console.log("factoryReadSuccess: ", factoryReadIsSuccess);
 
   return (
     <>
